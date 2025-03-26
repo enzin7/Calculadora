@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Calculadora V.1</title>
+    <title>Calculadora V.2</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
 
     <div class="calculadora">
-        <h1>calculadora V.1</h1>
+        <h1>CALCULADORA</h1>
         <div class="display" id="display"></div>
         <div class="buttons">
             <button class="button light-gray" onclick="clearDisplay()">C</button>
@@ -31,7 +33,9 @@
             <button class="button dark-gray" onclick="appendNumber('3')">3</button>
             <button class="button yellow" onclick="appendOperator('+')">+</button>
 
-            <button class="button dark-gray" onclick="toggleHistory()">H</button>
+            <button class="button dark-gray" onclick="toggleHistory()">
+                <i class="fa-solid fa-clock-rotate-left"></i> <!-- Ícone de histórico -->
+            </button>
             <button class="button dark-gray" onclick="appendNumber('0')">0</button>
             <button class="button dark-gray" onclick="appendDecimal('.')">,</button>
             <button class="button yellow" onclick="calculate()">=</button>
