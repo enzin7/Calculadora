@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(45deg, black, crimson);
+    background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,32 +10,32 @@ body {
 }
 
 .calculadora {
-    background-color: black;
+    background-color: #333333;
     padding: 20px;
-    border-radius: 25px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
     text-align: center;
     width: 320px;
 }
 
 .historico {
+    position: relative;
     display: none;
-    background-color: black;
+    background-color: #333333;
     color: white;
     padding: 20px;
-    border-radius: 25px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
     text-align: center;
-    margin: 50px;
+    margin-right: px;
+    margin: 15px;
     width: 250px;
 }
 
 .history {
-    background-color: #222;
+    background-color: black;
     color: #fff;
     font-size: 20px;
-    padding: 10px;
-    border-radius: 15px;
+    padding: 15px;
+    border-radius: 10px;
     margin-bottom: 20px;
     min-height: 25px;
     text-align: left;
@@ -43,46 +43,66 @@ body {
 }
 
 .display {
-    background-color: #222;
+    background-color: black;
     color: #fff;
-    font-size: 25px;
-    padding: 10px;
-    border-radius: 15px;
+    font-size: 30px;
+    padding: 18px;
+    border-radius: 10px;
     margin-bottom: 20px;
     min-height: 35px;
     text-align: right;
+    position: relative;
 }
 
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    gap: 10px;
 }
 
 .button {
     border: none;
-    border-radius: 50%;
     padding: 20px;
-    font-size: 1.5rem;
+    font-size: 20px;
     cursor: pointer;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 12px;
 }
 
 .button.light-gray {
-    background-color: #696969;
+    background-color: #555555;
     color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .button.dark-gray {
-    background-color: #333;
+    background-color: #555555;
     color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .button.yellow {
-    background-color: #f8ac32;
+    background-color: #FFA500;
     color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .button.clear {
-    border-radius: 15px;
+    background-color: #FFA500;
+    border-radius: 12px;
     padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 100px;
+}
+
+.button.ht {
+    position: relative;
+    top: -105px;
+    left: 140px;
+    padding: 0px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    width: 0;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Calculadora V.2</title>
+    <title>Calculadora</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -10,32 +10,33 @@
 <body>
 
     <div class="calculadora">
-        <h1>CALCULADORA</h1>
         <div class="display" id="display"></div>
         <div class="buttons">
-            <button class="button light-gray" onclick="clearDisplay()">C</button>
+            <button class="button dark-gray ht" onclick="toggleHistory()">...</button>
+        </div>
+        
+        <div style="margin-top: -30px;" class="buttons">
+            <button class="button light-gray" onclick="clearDisplay()">AC</button>
             <button class="button light-gray" onclick="invertNumber()">+/-</button>
             <button class="button light-gray" onclick="appendOperator('%')">%</button>
-            <button class="button yellow" onclick="appendOperator('/')">÷</button>
+            <button class="button yellow" onclick="appendOperator(' / ')">÷</button>
 
             <button class="button dark-gray" onclick="appendNumber('7')">7</button>
             <button class="button dark-gray" onclick="appendNumber('8')">8</button>
             <button class="button dark-gray" onclick="appendNumber('9')">9</button>
-            <button class="button yellow" onclick="appendOperator('*')">x</button>
+            <button class="button yellow" onclick="appendOperator(' * ')">x</button>
 
             <button class="button dark-gray" onclick="appendNumber('4')">4</button>
             <button class="button dark-gray" onclick="appendNumber('5')">5</button>
             <button class="button dark-gray" onclick="appendNumber('6')">6</button>
-            <button class="button yellow" onclick="appendOperator('-')">-</button>
+            <button class="button yellow" onclick="appendOperator(' - ')">-</button>
 
             <button class="button dark-gray" onclick="appendNumber('1')">1</button>
             <button class="button dark-gray" onclick="appendNumber('2')">2</button>
             <button class="button dark-gray" onclick="appendNumber('3')">3</button>
-            <button class="button yellow" onclick="appendOperator('+')">+</button>
+            <button class="button yellow" onclick="appendOperator(' + ')">+</button>
 
-            <button class="button dark-gray" onclick="toggleHistory()">
-                <i class="fa-solid fa-clock-rotate-left"></i> <!-- Ícone de histórico -->
-            </button>
+            <button class="button light-gray" onclick="backspace()">←</button>
             <button class="button dark-gray" onclick="appendNumber('0')">0</button>
             <button class="button dark-gray" onclick="appendDecimal('.')">,</button>
             <button class="button yellow" onclick="calculate()">=</button>
@@ -46,8 +47,10 @@
         <h2>Histórico</h2>
         <ul class="history" id="history"></ul>
         <button class="button light-gray clear" onclick="clearHistory()">Limpar</button>
-    </div>    
+    </div>
 
+    
+    
     <script src="script.js"></script>
 
 </body>

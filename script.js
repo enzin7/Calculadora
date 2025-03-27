@@ -20,11 +20,11 @@ function calculate() {
             result = result.toFixed(2);
         }
 
-        // 🔥 Adicionando ao histórico corretamente
+        // Adiciona ao histórico
         history.push(`${currentInput} = ${result}`);
         updateHistory();
 
-        currentInput = result.toString(); // Convertendo para string para evitar erros ao adicionar novos números
+        currentInput = result.toString();
         display.textContent = currentInput;
     } catch (error) {
         display.textContent = "Erro";
@@ -39,21 +39,19 @@ function clearDisplay() {
 
 function invertNumber() {
     if (currentInput !== "") {
-        currentInput = (parseFloat(currentInput) * -1).toString(); // 🔥 Corrigido
+        currentInput = (parseFloat(currentInput) * -1).toString();
         display.textContent = currentInput;
     }
 }
 
 function updateHistory() {
     let historyList = document.getElementById("history");
-    if (historyList) {
-        historyList.innerHTML = "";
-        history.forEach(entry => {
-            let li = document.createElement("li");
-            li.innerText = entry;
-            historyList.appendChild(li);
-        });
-    }
+    historyList.innerHTML = "";
+    history.forEach(entry => {
+        let li = document.createElement("li");
+        li.innerText = entry;
+        historyList.appendChild(li);
+    });
 }
 
 function clearHistory() {
@@ -68,4 +66,9 @@ function toggleHistory() {
     } else {
         historyContainer.style.display = "none";
     }
+}
+
+function backspace() {
+    currentInput = currentInput.slice(0, -1);
+    display.textContent = currentInput;
 }
