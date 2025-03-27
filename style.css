@@ -1,0 +1,108 @@
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.calculadora {
+    background-color: #333333;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 320px;
+}
+
+.historico {
+    position: relative;
+    display: none;
+    background-color: #333333;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    margin-right: px;
+    margin: 15px;
+    width: 250px;
+}
+
+.history {
+    background-color: black;
+    color: #fff;
+    font-size: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    min-height: 25px;
+    text-align: left;
+    list-style-type: none;
+}
+
+.display {
+    background-color: black;
+    color: #fff;
+    font-size: 30px;
+    padding: 18px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    min-height: 35px;
+    text-align: right;
+    position: relative;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.button {
+    border: none;
+    padding: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 12px;
+}
+
+.button.light-gray {
+    background-color: #555555;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.button.dark-gray {
+    background-color: #555555;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.button.yellow {
+    background-color: #FFA500;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.button.clear {
+    background-color: #FFA500;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 100px;
+}
+
+.button.ht {
+    position: relative;
+    top: -105px;
+    left: 140px;
+    padding: 0px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    width: 0;
+}
