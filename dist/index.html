@@ -7,38 +7,222 @@
 </head>
 
 <body>
-    <div id="calculadora-Basica" class="calculadora">
-        <div class="display">
+    <div class="calculadora">
+
+        <div class="display-wrapper" id="calculadora-basica">'
+            
+            <button class="ht" onclick="mostrarHistorico()">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                    width="18" height="18" viewBox="0 0 512.000000 448.000000"
+                    preserveAspectRatio="xMidYMid meet">
+
+                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="white">
+                        <path d="M2630 4900 c-955 -78 -1750 -707 -2045 -1620 -20 -63 -38 -116 -39
+                        -118 -2 -1 -40 54 -86 123 -46 69 -98 139 -116 154 -99 87 -259 58 -321 -58
+                        -27 -52 -31 -146 -9 -190 40 -76 507 -770 534 -793 43 -36 95 -51 159 -46 52
+                        5 72 16 426 254 204 137 384 260 399 273 71 59 91 171 46 258 -43 85 -160 134
+                        -251 104 -19 -7 -110 -63 -202 -126 -93 -63 -170 -113 -172 -112 -5 6 37 146
+                        68 224 134 340 350 622 640 838 753 561 1809 484 2474 -180 359 -359 555 -834
+                        555 -1345 0 -320 -66 -587 -216 -880 -85 -164 -175 -289 -308 -427 -180 -187
+                        -322 -291 -541 -398 -651 -317 -1395 -243 -1978 197 -112 84 -278 252 -370
+                        374 -86 116 -129 144 -213 144 -158 -1 -261 -164 -191 -301 60 -119 289 -374
+                        462 -514 258 -210 576 -370 894 -450 375 -94 762 -94 1136 0 558 141 1044 483
+                        1364 962 184 275 314 613 368 953 25 161 25 538 0 700 -114 731 -540 1352
+                        -1174 1709 -385 217 -867 325 -1293 291z"/>
+                        <path d="M2682 3829 c-52 -26 -99 -81 -113 -131 -6 -24 -9 -251 -7 -620 3
+                        -523 5 -586 20 -613 28 -50 686 -714 732 -738 96 -50 227 -15 280 76 35 60 41
+                        105 22 170 -15 51 -33 72 -320 364 l-305 310 -3 525 -3 525 -30 48 c-58 93
+                        -179 130 -273 84z"/>
+                    </g>
+                </svg>
+                <div class="linha"></div>
+            </button>
+
+
             <div class="display-historico" id="displayHistorico" onclick="antigaConta(this.textContent)"></div>
-            <div class="display-inner" id="display"></div>
+            
+            <div class="display">
+                <div class="display-inner" id="display"></div>
+            </div>
+
+            <div class="displayConversor" id="calculadora-conversao" style="display: none;">
+                <div class="linha-conversor"></div>
+                <div class="display-convertido" id="displayConvertido">
+                    <div class="container-moeda">
+
+                        <div class="valor-wrapper">
+                            <span id="valor-convertido" class="valor-convertido"></span>
+                        </div>
+
+                        <span class="moeda-selecionada" id="moedaSelecionada" style="font-size: 17px;">USD</span>
+                    </div>
+                    <select class="select-moeda" id="moeda">
+                            <option value="USD">Dólar Americano (USD)</option>
+                            <option value="AED">Dirham dos Emirados Árabes Unidos (AED)</option>
+                            <option value="AFN">Afegani (AFN)</option>
+                            <option value="ALL">Lek Albanês (ALL)</option>
+                            <option value="AMD">Dram Armênio (AMD)</option>
+                            <option value="ANG">Florim Antilhano (ANG)</option>
+                            <option value="AOA">Kwanza Angolano (AOA)</option>
+                            <option value="ARS">Peso Argentino (ARS)</option>
+                            <option value="AUD">Dólar Australiano (AUD)</option>
+                            <option value="AWG">Florim Arubano (AWG)</option>
+                            <option value="AZN">Manat Azeri (AZN)</option>
+                            <option value="BAM">Marco Bósnio-Herzegovino (BAM)</option>
+                            <option value="BBD">Dólar de Barbados (BBD)</option>
+                            <option value="BDT">Taka Bangladês (BDT)</option>
+                            <option value="BGN">Lev Búlgaro (BGN)</option>
+                            <option value="BHD">Dinar Bahreinita (BHD)</option>
+                            <option value="BIF">Franco Burundiano (BIF)</option>
+                            <option value="BMD">Dólar Bermudiano (BMD)</option>
+                            <option value="BND">Dólar Bruneano (BND)</option>
+                            <option value="BOB">Boliviano (BOB)</option>
+                            <option value="BSD">Dólar Bahamense (BSD)</option>
+                            <option value="BTN">Ngultrum Butanes (BTN)</option>
+                            <option value="BWP">Pula Botsuanense (BWP)</option>
+                            <option value="BYN">Rublo Bielorrusso (BYN)</option>
+                            <option value="BZD">Dólar de Belize (BZD)</option>
+                            <option value="CAD">Dólar Canadense (CAD)</option>
+                            <option value="CDF">Franco Congolês (CDF)</option>
+                            <option value="CHF">Franco Suíço (CHF)</option>
+                            <option value="CLP">Peso Chileno (CLP)</option>
+                            <option value="CNY">Yuan Chinês (CNY)</option>
+                            <option value="COP">Peso Colombiano (COP)</option>
+                            <option value="CRC">Colón Costarriquenho (CRC)</option>
+                            <option value="CUP">Peso Cubano (CUP)</option>
+                            <option value="CVE">Escudo Cabo-Verdiano (CVE)</option>
+                            <option value="CZK">Coroa Checa (CZK)</option>
+                            <option value="DJF">Franco Djibutiano (DJF)</option>
+                            <option value="DKK">Coroa Dinamarquesa (DKK)</option>
+                            <option value="DOP">Peso Dominicano (DOP)</option>
+                            <option value="DZD">Dinar Argélio (DZD)</option>
+                            <option value="EGP">Libra Egípcia (EGP)</option>
+                            <option value="ERN">Nakfa Eritreu (ERN)</option>
+                            <option value="ETB">Birr Etíope (ETB)</option>
+                            <option value="EUR">Euro (EUR)</option>
+                            <option value="FJD">Dólar Fiji (FJD)</option>
+                            <option value="FKP">Libra das Ilhas Malvinas (FKP)</option>
+                            <option value="FOK">Coroa das Ilhas Faroé (FOK)</option>
+                            <option value="GBP">Libra Esterlina (GBP)</option>
+                            <option value="GEL">Lari Georgiano (GEL)</option>
+                            <option value="GGP">Libra das Ilhas do Canal (GGP)</option>
+                            <option value="GHS">Cedi Ghanês (GHS)</option>
+                            <option value="GIP">Libra de Gibraltar (GIP)</option>
+                            <option value="GMD">Dalasi Gambiano (GMD)</option>
+                            <option value="GNF">Franco Guineense (GNF)</option>
+                            <option value="GTQ">Quetzal Guatemalteco (GTQ)</option>
+                            <option value="GYD">Dólar Guianense (GYD)</option>
+                            <option value="HKD">Dólar de Hong Kong (HKD)</option>
+                            <option value="HNL">Lempira Hondurenha (HNL)</option>
+                            <option value="HRK">Kuna Croata (HRK)</option>
+                            <option value="HTG">Gourde Haitiano (HTG)</option>
+                            <option value="HUF">Forint Húngaro (HUF)</option>
+                            <option value="IDR">Rupia Indonésia (IDR)</option>
+                            <option value="ILS">Shekel Israelense (ILS)</option>
+                            <option value="IMP">Libra de Ilha de Man (IMP)</option>
+                            <option value="INR">Rupia Indiana (INR)</option>
+                            <option value="IQD">Dinar Iraquiano (IQD)</option>
+                            <option value="IRR">Rial Iraniano (IRR)</option>
+                            <option value="ISK">Coroa Islandesa (ISK)</option>
+                            <option value="JEP">Libra de Jersey (JEP)</option>
+                            <option value="JMD">Dólar Jamaicano (JMD)</option>
+                            <option value="JOD">Dinar Jordaniano (JOD)</option>
+                            <option value="JPY">Iene Japonês (JPY)</option>
+                            <option value="KES">Xelim Queniano (KES)</option>
+                            <option value="KGS">Som Quirguiz (KGS)</option>
+                            <option value="KHR">Riel Cambojano (KHR)</option>
+                            <option value="KID">Dólar das Ilhas Kiribati (KID)</option>
+                            <option value="KMF">Franco Comorense (KMF)</option>
+                            <option value="KRW">Won Sul-Coreano (KRW)</option>
+                            <option value="KWD">Dinar Kuwaitiano (KWD)</option>
+                            <option value="KYD">Dólar das Ilhas Caimã (KYD)</option>
+                            <option value="KZT">Tenge Cazaque (KZT)</option>
+                            <option value="LAK">Kip Laociano (LAK)</option>
+                            <option value="LBP">Libra Libanesa (LBP)</option>
+                            <option value="LKR">Rúpia Sri Lanka (LKR)</option>
+                            <option value="LRD">Dólar Liberiano (LRD)</option>
+                            <option value="LSL">Loti Lesotiano (LSL)</option>
+                            <option value="LYD">Dinar Líbio (LYD)</option>
+                            <option value="MAD">Dirham Marroquino (MAD)</option>
+                            <option value="MDL">Leu Moldávio (MDL)</option>
+                            <option value="MGA">Ariary Malgaxe (MGA)</option>
+                            <option value="MKD">Denar Macedônio (MKD)</option>
+                            <option value="MMK">Kyat Birmanês (MMK)</option>
+                            <option value="MNT">Tugrik Mongol (MNT)</option>
+                            <option value="MOP">Pataca Macaense (MOP)</option>
+                            <option value="MRU">Ouguiya Mauritano (MRU)</option>
+                            <option value="MUR">Rúpia Mauriciana (MUR)</option>
+                            <option value="MVR">Rúpia Maldiva (MVR)</option>
+                            <option value="MWK">Kwacha Malawiana (MWK)</option>
+                            <option value="MXN">Peso Mexicano (MXN)</option>
+                            <option value="MYR">Ringgit Malaio (MYR)</option>
+                            <option value="MZN">Metical Moçambicano (MZN)</option>
+                            <option value="NAD">Námalawiano (NAD)</option>
+                            <option value="NGN">Naira Nigeriana (NGN)</option>
+                            <option value="NIO">Córdoba Nicaraguense (NIO)</option>
+                            <option value="NOK">Coroa Norueguesa (NOK)</option>
+                            <option value="NPR">Rúpia Nepalese (NPR)</option>
+                            <option value="NZD">Dólar Neozelandês (NZD)</option>
+                            <option value="OMR">Rial Omanense (OMR)</option>
+                            <option value="PAB">Balboa Panamenho (PAB)</option>
+                            <option value="PEN">Novo Sol Peruano (PEN)</option>
+                            <option value="PGK">Kina Papua-Nova Guiné (PGK)</option>
+                            <option value="PHP">Peso Filipino (PHP)</option>
+                            <option value="PKR">Rúpia Paquistanesa (PKR)</option>
+                            <option value="PLN">Zloty Polonês (PLN)</option>
+                            <option value="PYG">Guarani Paraguaio (PYG)</option>
+                            <option value="QAR">Rial Catarense (QAR)</option>
+                            <option value="RON">Leu Romeno (RON)</option>
+                            <option value="RSD">Dinar Sérvio (RSD)</option>
+                            <option value="RUB">Rublo Russo (RUB)</option>
+                            <option value="RWF">Franco Ruandês (RWF)</option>
+                            <option value="SAR">Rial Saudita (SAR)</option>
+                            <option value="SBD">Dólar das Ilhas Salomão (SBD)</option>
+                            <option value="SCR">Rúpia Seichelense (SCR)</option>
+                            <option value="SDG">Libra Sudanesa (SDG)</option>
+                            <option value="SEK">Coroa Sueca (SEK)</option>
+                            <option value="SGD">Dólar de Singapura (SGD)</option>
+                            <option value="SHP">Libra de Santa Helena (SHP)</option>
+                            <option value="SLE">Leone Serra-leonês (SLE)</option>
+                            <option value="SLL">Leone da Serra Leoa (SLL)</option>
+                            <option value="SOS">Xelim Somaliano (SOS)</option>
+                            <option value="SRD">Dólar Surinamês (SRD)</option>
+                            <option value="SSP">Libra do Sudão do Sul (SSP)</option>
+                            <option value="STN">Dobra de São Tomé e Príncipe (STN)</option>
+                            <option value="SYP">Libra Síria (SYP)</option>
+                            <option value="SZL">Lilangeni Suazilandês (SZL)</option>
+                            <option value="THB">Baht Tailandês (THB)</option>
+                            <option value="TJS">Somoni Tajique (TJS)</option>
+                            <option value="TMT">Manat Turcomano (TMT)</option>
+                            <option value="TND">Dinar Tunisiano (TND)</option>
+                            <option value="TOP">Pa'anga Tonganês (TOP)</option>
+                            <option value="TRY">Lira Turca (TRY)</option>
+                            <option value="TTD">Dólar de Trinidad e Tobago (TTD)</option>
+                            <option value="TVD">Dólar de Tuvalu (TVD)</option>
+                            <option value="TWD">Novo Dólar de Taiwan (TWD)</option>
+                            <option value="TZS">Xelim Tanzaniano (TZS)</option>
+                            <option value="UAH">Hryvnia Ucraniana (UAH)</option>
+                            <option value="UGX">Xelim Ugandense (UGX)</option>
+                            <option value="UYU">Peso Uruguaio (UYU)</option>
+                            <option value="UZS">Som Uzbique (UZS)</option>
+                            <option value="VES">Bolívar Venezuelano (VES)</option>
+                            <option value="VND">Dong Vietnamita (VND)</option>
+                            <option value="VUV">Vatu de Vanuatu (VUV)</option>
+                            <option value="WST">Tala Samoana (WST)</option>
+                            <option value="XAF">Franco CFA da África Central (XAF)</option>
+                            <option value="XCD">Dólar do Caribe Oriental (XCD)</option>
+                            <option value="XCG">Florim de Curaçao (XCG)</option>
+                            <option value="XDR">Direitos Especiais de Saque (XDR)</option>
+                            <option value="XOF">Franco CFA da África Ocidental (XOF)</option>
+                            <option value="XPF">Franco CFP (XPF)</option>
+                            <option value="YER">Rial Yemenita (YER)</option>
+                            <option value="ZAR">Rand Sul-Africano (ZAR)</option>
+                            <option value="ZMW">Kwacha Zambiano (ZMW)</option>
+                            <option value="ZWL">Dólar Zimbabuano (ZWL)</option>   
+                    </select>
+                </div>
+            </div>
         </div>
-
-        <button class="ht" onclick="mostrarHistorico()">
-            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                width="18" height="18" viewBox="0 0 512.000000 448.000000"
-                preserveAspectRatio="xMidYMid meet">
-
-                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="white">
-                    <path d="M2630 4900 c-955 -78 -1750 -707 -2045 -1620 -20 -63 -38 -116 -39
-                    -118 -2 -1 -40 54 -86 123 -46 69 -98 139 -116 154 -99 87 -259 58 -321 -58
-                    -27 -52 -31 -146 -9 -190 40 -76 507 -770 534 -793 43 -36 95 -51 159 -46 52
-                    5 72 16 426 254 204 137 384 260 399 273 71 59 91 171 46 258 -43 85 -160 134
-                    -251 104 -19 -7 -110 -63 -202 -126 -93 -63 -170 -113 -172 -112 -5 6 37 146
-                    68 224 134 340 350 622 640 838 753 561 1809 484 2474 -180 359 -359 555 -834
-                    555 -1345 0 -320 -66 -587 -216 -880 -85 -164 -175 -289 -308 -427 -180 -187
-                    -322 -291 -541 -398 -651 -317 -1395 -243 -1978 197 -112 84 -278 252 -370
-                    374 -86 116 -129 144 -213 144 -158 -1 -261 -164 -191 -301 60 -119 289 -374
-                    462 -514 258 -210 576 -370 894 -450 375 -94 762 -94 1136 0 558 141 1044 483
-                    1364 962 184 275 314 613 368 953 25 161 25 538 0 700 -114 731 -540 1352
-                    -1174 1709 -385 217 -867 325 -1293 291z"/>
-                    <path d="M2682 3829 c-52 -26 -99 -81 -113 -131 -6 -24 -9 -251 -7 -620 3
-                    -523 5 -586 20 -613 28 -50 686 -714 732 -738 96 -50 227 -15 280 76 35 60 41
-                    105 22 170 -15 51 -33 72 -320 364 l-305 310 -3 525 -3 525 -30 48 c-58 93
-                    -179 130 -273 84z"/>
-                </g>
-            </svg>
-            <div class="linha"></div>
-        </button>
 
         <div id="containerHistorico" class="containerHistorico">
             <div class="tituloHistorico">
@@ -95,240 +279,79 @@
         </div>
 
         <div id="menu-container" class="popover-menu hidden">
-            <button class="menu-item selected">Básica</button>
-            <button id="conversao" class="menu-item">Conversão</button>
+            <button class="menu-item" id="basica">                
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                width="20pt" height="20pt" viewBox="0 0 250 600"
+                preserveAspectRatio="xMidYMid meet">
+
+                    <g transform="translate(0,512) scale(0.1,-0.1)"
+                    fill="currentColor">
+                    <path d="M1535 4226 c-37 -17 -70 -52 -84 -89 -7 -17 -11 -127 -11 -282 l0
+                    -254 -269 -3 c-254 -3 -271 -4 -297 -24 -53 -39 -69 -71 -69 -134 0 -63 16
+                    -95 69 -134 26 -20 43 -21 296 -24 l269 -3 3 -269 c3 -253 4 -270 24 -296 39
+                    -53 71 -69 134 -69 63 0 95 16 134 69 20 26 21 43 24 296 l3 269 269 3 c253 3
+                    270 4 296 24 53 39 69 71 69 134 0 63 -16 95 -69 134 -26 20 -43 21 -296 24
+                    l-269 3 -3 269 c-3 253 -4 270 -24 296 -11 15 -32 37 -46 47 -34 25 -113 32
+                    -153 13z"/>
+                    <path d="M2815 3586 c-67 -29 -105 -106 -91 -181 9 -47 59 -102 104 -115 25
+                    -8 257 -10 714 -8 665 3 677 3 704 24 53 39 69 71 69 134 0 63 -16 95 -69 134
+                    -27 21 -38 21 -714 23 -556 2 -693 0 -717 -11z"/>
+                    <path d="M1053 2140 c-46 -20 -79 -64 -89 -117 -13 -68 8 -98 215 -306 l196
+                    -197 -197 -198 c-108 -108 -202 -210 -208 -225 -17 -47 -12 -101 13 -138 47
+                    -69 121 -96 194 -69 15 6 117 100 225 208 l198 197 197 -197 c163 -161 206
+                    -198 241 -209 116 -34 227 77 193 193 -11 35 -48 78 -209 241 l-196 197 201
+                    203 c217 218 224 229 208 314 -9 49 -69 109 -118 118 -85 16 -96 9 -315 -208
+                    l-202 -202 -193 192 c-231 231 -259 247 -354 203z"/>
+                    <path d="M2815 1986 c-67 -29 -105 -106 -91 -181 9 -47 59 -102 104 -115 25
+                    -8 257 -10 714 -8 665 3 677 3 704 24 53 39 69 71 69 134 0 63 -16 95 -69 134
+                    -27 21 -38 21 -714 23 -556 2 -693 0 -717 -11z"/>
+                    <path d="M2815 1346 c-67 -29 -105 -106 -91 -181 9 -47 59 -102 104 -115 25
+                    -8 257 -10 714 -8 665 3 677 3 704 24 53 39 69 71 69 134 0 63 -16 95 -69 134
+                    -27 21 -38 21 -714 23 -556 2 -693 0 -717 -11z"/>
+                    </g>
+                </svg>
+                Básica
+            </button>
+            <button  class="menu-item" id="conversao">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                width="40pt" height="15pt" viewBox="12 0 50 50"
+                preserveAspectRatio="xMidYMid meet">
+
+                    <g transform="translate(0.000000,50) scale(0.100000,-0.100000)"
+                    fill="currentColor">
+                    <path d="M95 486 c-67 -30 -105 -106 -91 -181 12 -64 85 -125 149 -125 21 0
+                    25 -6 30 -42 6 -45 28 -81 71 -112 20 -16 42 -21 86 -21 63 0 95 16 134 69 29
+                    39 29 133 0 172 -31 42 -67 65 -111 71 -39 5 -41 7 -46 46 -14 101 -130 165
+                    -222 123z m133 -26 c66 -41 98 -141 48 -154 -27 -7 -86 -69 -86 -91 0 -22 -59
+                    -19 -98 5 -18 11 -41 34 -52 52 -71 117 71 259 188 188z m180 -180 c18 -11 41
+                    -34 52 -52 71 -117 -71 -259 -188 -188 -18 11 -41 34 -52 52 -71 117 71 259
+                    188 188z"/>
+                    <path d="M150 447 c0 -7 -9 -18 -20 -25 -12 -7 -20 -23 -20 -38 0 -17 7 -28
+                    20 -31 14 -4 20 -14 20 -34 0 -33 -7 -36 -26 -11 -13 16 -13 16 -14 0 0 -10 9
+                    -23 20 -30 11 -7 20 -18 20 -25 0 -7 5 -13 10 -13 6 0 10 6 10 14 0 7 8 16 18
+                    19 31 8 34 46 6 72 -13 12 -24 32 -24 44 0 23 16 29 23 9 2 -7 8 -9 13 -5 5 5
+                    -1 17 -13 27 -13 10 -23 23 -23 29 0 6 -4 11 -10 11 -5 0 -10 -6 -10 -13z m0
+                    -57 c0 -11 -4 -20 -10 -20 -5 0 -10 9 -10 20 0 11 5 20 10 20 6 0 10 -9 10
+                    -20z m40 -81 c0 -10 -4 -19 -10 -19 -5 0 -10 12 -10 26 0 14 4 23 10 19 6 -3
+                    10 -15 10 -26z"/>
+                    <path d="M300 230 c-11 -11 -20 -24 -20 -30 0 -5 -7 -10 -15 -10 -18 0 -20
+                    -16 -2 -24 10 -5 10 -7 0 -12 -18 -8 -16 -24 2 -24 8 0 15 -4 15 -10 0 -17 39
+                    -50 58 -50 22 0 59 26 50 35 -3 3 -16 0 -27 -7 -15 -9 -26 -10 -38 -2 -25 16
+                    -27 34 -4 34 12 0 21 5 21 10 0 6 -11 10 -25 10 -14 0 -25 5 -25 10 0 6 11 10
+                    25 10 14 0 25 5 25 10 0 6 -9 10 -21 10 -23 0 -21 18 4 34 12 8 23 7 38 -2 27
+                    -17 40 -5 15 14 -27 19 -52 18 -76 -6z"/>
+                    <path d="M360 465 l-24 -26 27 -26 c27 -28 50 -26 27 2 -11 13 -8 15 18 15 42
+                    0 62 -23 62 -71 0 -21 5 -39 10 -39 6 0 10 19 10 43 0 54 -30 87 -80 87 -26 0
+                    -31 3 -22 12 7 7 12 16 12 20 0 15 -17 8 -40 -17z"/>
+                    <path d="M10 137 c0 -52 30 -87 74 -87 24 0 27 -2 16 -15 -23 -28 0 -29 28 -2
+                    l27 27 -27 27 c-28 27 -51 26 -28 -2 11 -13 9 -15 -13 -15 -37 0 -57 25 -57
+                    71 0 21 -4 39 -10 39 -5 0 -10 -19 -10 -43z"/>
+                    </g>
+                </svg>
+                <p style="margin-left: -25px;">Conversão</p>
+            </button>
         </div>
         <div id="overlay" class="overlay"></div>
-    </div>
-
-
-    <!-- Calculadoar de Conversão -->
-    <div id="calculadora-Conversao" class="calculadora" style="display: none;">
-        <div class="displayConversor">
-            <div class="display-inner-conversor" id="displayConversor"></div>
-            <div class="linha-conversor"></div>
-            <div class="display-convertido" id="displayConvertido">
-                <div class="container-moeda">
-
-                    <div class="valor-wrapper">
-                        <span id="valor-convertido" class="valor-convertido"></span>
-                    </div>
-
-                    <span class="moeda-selecionada" id="moedaSelecionada" style="font-size: 17px;">USD</span>
-                </div>
-                 <select class="select-moeda" id="moeda">
-                        <option value="USD">Dólar Americano (USD)</option>
-                        <option value="AED">Dirham dos Emirados Árabes Unidos (AED)</option>
-                        <option value="AFN">Afegani (AFN)</option>
-                        <option value="ALL">Lek Albanês (ALL)</option>
-                        <option value="AMD">Dram Armênio (AMD)</option>
-                        <option value="ANG">Florim Antilhano (ANG)</option>
-                        <option value="AOA">Kwanza Angolano (AOA)</option>
-                        <option value="ARS">Peso Argentino (ARS)</option>
-                        <option value="AUD">Dólar Australiano (AUD)</option>
-                        <option value="AWG">Florim Arubano (AWG)</option>
-                        <option value="AZN">Manat Azeri (AZN)</option>
-                        <option value="BAM">Marco Bósnio-Herzegovino (BAM)</option>
-                        <option value="BBD">Dólar de Barbados (BBD)</option>
-                        <option value="BDT">Taka Bangladês (BDT)</option>
-                        <option value="BGN">Lev Búlgaro (BGN)</option>
-                        <option value="BHD">Dinar Bahreinita (BHD)</option>
-                        <option value="BIF">Franco Burundiano (BIF)</option>
-                        <option value="BMD">Dólar Bermudiano (BMD)</option>
-                        <option value="BND">Dólar Bruneano (BND)</option>
-                        <option value="BOB">Boliviano (BOB)</option>
-                        <option value="BSD">Dólar Bahamense (BSD)</option>
-                        <option value="BTN">Ngultrum Butanes (BTN)</option>
-                        <option value="BWP">Pula Botsuanense (BWP)</option>
-                        <option value="BYN">Rublo Bielorrusso (BYN)</option>
-                        <option value="BZD">Dólar de Belize (BZD)</option>
-                        <option value="CAD">Dólar Canadense (CAD)</option>
-                        <option value="CDF">Franco Congolês (CDF)</option>
-                        <option value="CHF">Franco Suíço (CHF)</option>
-                        <option value="CLP">Peso Chileno (CLP)</option>
-                        <option value="CNY">Yuan Chinês (CNY)</option>
-                        <option value="COP">Peso Colombiano (COP)</option>
-                        <option value="CRC">Colón Costarriquenho (CRC)</option>
-                        <option value="CUP">Peso Cubano (CUP)</option>
-                        <option value="CVE">Escudo Cabo-Verdiano (CVE)</option>
-                        <option value="CZK">Coroa Checa (CZK)</option>
-                        <option value="DJF">Franco Djibutiano (DJF)</option>
-                        <option value="DKK">Coroa Dinamarquesa (DKK)</option>
-                        <option value="DOP">Peso Dominicano (DOP)</option>
-                        <option value="DZD">Dinar Argélio (DZD)</option>
-                        <option value="EGP">Libra Egípcia (EGP)</option>
-                        <option value="ERN">Nakfa Eritreu (ERN)</option>
-                        <option value="ETB">Birr Etíope (ETB)</option>
-                        <option value="EUR">Euro (EUR)</option>
-                        <option value="FJD">Dólar Fiji (FJD)</option>
-                        <option value="FKP">Libra das Ilhas Malvinas (FKP)</option>
-                        <option value="FOK">Coroa das Ilhas Faroé (FOK)</option>
-                        <option value="GBP">Libra Esterlina (GBP)</option>
-                        <option value="GEL">Lari Georgiano (GEL)</option>
-                        <option value="GGP">Libra das Ilhas do Canal (GGP)</option>
-                        <option value="GHS">Cedi Ghanês (GHS)</option>
-                        <option value="GIP">Libra de Gibraltar (GIP)</option>
-                        <option value="GMD">Dalasi Gambiano (GMD)</option>
-                        <option value="GNF">Franco Guineense (GNF)</option>
-                        <option value="GTQ">Quetzal Guatemalteco (GTQ)</option>
-                        <option value="GYD">Dólar Guianense (GYD)</option>
-                        <option value="HKD">Dólar de Hong Kong (HKD)</option>
-                        <option value="HNL">Lempira Hondurenha (HNL)</option>
-                        <option value="HRK">Kuna Croata (HRK)</option>
-                        <option value="HTG">Gourde Haitiano (HTG)</option>
-                        <option value="HUF">Forint Húngaro (HUF)</option>
-                        <option value="IDR">Rupia Indonésia (IDR)</option>
-                        <option value="ILS">Shekel Israelense (ILS)</option>
-                        <option value="IMP">Libra de Ilha de Man (IMP)</option>
-                        <option value="INR">Rupia Indiana (INR)</option>
-                        <option value="IQD">Dinar Iraquiano (IQD)</option>
-                        <option value="IRR">Rial Iraniano (IRR)</option>
-                        <option value="ISK">Coroa Islandesa (ISK)</option>
-                        <option value="JEP">Libra de Jersey (JEP)</option>
-                        <option value="JMD">Dólar Jamaicano (JMD)</option>
-                        <option value="JOD">Dinar Jordaniano (JOD)</option>
-                        <option value="JPY">Iene Japonês (JPY)</option>
-                        <option value="KES">Xelim Queniano (KES)</option>
-                        <option value="KGS">Som Quirguiz (KGS)</option>
-                        <option value="KHR">Riel Cambojano (KHR)</option>
-                        <option value="KID">Dólar das Ilhas Kiribati (KID)</option>
-                        <option value="KMF">Franco Comorense (KMF)</option>
-                        <option value="KRW">Won Sul-Coreano (KRW)</option>
-                        <option value="KWD">Dinar Kuwaitiano (KWD)</option>
-                        <option value="KYD">Dólar das Ilhas Caimã (KYD)</option>
-                        <option value="KZT">Tenge Cazaque (KZT)</option>
-                        <option value="LAK">Kip Laociano (LAK)</option>
-                        <option value="LBP">Libra Libanesa (LBP)</option>
-                        <option value="LKR">Rúpia Sri Lanka (LKR)</option>
-                        <option value="LRD">Dólar Liberiano (LRD)</option>
-                        <option value="LSL">Loti Lesotiano (LSL)</option>
-                        <option value="LYD">Dinar Líbio (LYD)</option>
-                        <option value="MAD">Dirham Marroquino (MAD)</option>
-                        <option value="MDL">Leu Moldávio (MDL)</option>
-                        <option value="MGA">Ariary Malgaxe (MGA)</option>
-                        <option value="MKD">Denar Macedônio (MKD)</option>
-                        <option value="MMK">Kyat Birmanês (MMK)</option>
-                        <option value="MNT">Tugrik Mongol (MNT)</option>
-                        <option value="MOP">Pataca Macaense (MOP)</option>
-                        <option value="MRU">Ouguiya Mauritano (MRU)</option>
-                        <option value="MUR">Rúpia Mauriciana (MUR)</option>
-                        <option value="MVR">Rúpia Maldiva (MVR)</option>
-                        <option value="MWK">Kwacha Malawiana (MWK)</option>
-                        <option value="MXN">Peso Mexicano (MXN)</option>
-                        <option value="MYR">Ringgit Malaio (MYR)</option>
-                        <option value="MZN">Metical Moçambicano (MZN)</option>
-                        <option value="NAD">Námalawiano (NAD)</option>
-                        <option value="NGN">Naira Nigeriana (NGN)</option>
-                        <option value="NIO">Córdoba Nicaraguense (NIO)</option>
-                        <option value="NOK">Coroa Norueguesa (NOK)</option>
-                        <option value="NPR">Rúpia Nepalese (NPR)</option>
-                        <option value="NZD">Dólar Neozelandês (NZD)</option>
-                        <option value="OMR">Rial Omanense (OMR)</option>
-                        <option value="PAB">Balboa Panamenho (PAB)</option>
-                        <option value="PEN">Novo Sol Peruano (PEN)</option>
-                        <option value="PGK">Kina Papua-Nova Guiné (PGK)</option>
-                        <option value="PHP">Peso Filipino (PHP)</option>
-                        <option value="PKR">Rúpia Paquistanesa (PKR)</option>
-                        <option value="PLN">Zloty Polonês (PLN)</option>
-                        <option value="PYG">Guarani Paraguaio (PYG)</option>
-                        <option value="QAR">Rial Catarense (QAR)</option>
-                        <option value="RON">Leu Romeno (RON)</option>
-                        <option value="RSD">Dinar Sérvio (RSD)</option>
-                        <option value="RUB">Rublo Russo (RUB)</option>
-                        <option value="RWF">Franco Ruandês (RWF)</option>
-                        <option value="SAR">Rial Saudita (SAR)</option>
-                        <option value="SBD">Dólar das Ilhas Salomão (SBD)</option>
-                        <option value="SCR">Rúpia Seichelense (SCR)</option>
-                        <option value="SDG">Libra Sudanesa (SDG)</option>
-                        <option value="SEK">Coroa Sueca (SEK)</option>
-                        <option value="SGD">Dólar de Singapura (SGD)</option>
-                        <option value="SHP">Libra de Santa Helena (SHP)</option>
-                        <option value="SLE">Leone Serra-leonês (SLE)</option>
-                        <option value="SLL">Leone da Serra Leoa (SLL)</option>
-                        <option value="SOS">Xelim Somaliano (SOS)</option>
-                        <option value="SRD">Dólar Surinamês (SRD)</option>
-                        <option value="SSP">Libra do Sudão do Sul (SSP)</option>
-                        <option value="STN">Dobra de São Tomé e Príncipe (STN)</option>
-                        <option value="SYP">Libra Síria (SYP)</option>
-                        <option value="SZL">Lilangeni Suazilandês (SZL)</option>
-                        <option value="THB">Baht Tailandês (THB)</option>
-                        <option value="TJS">Somoni Tajique (TJS)</option>
-                        <option value="TMT">Manat Turcomano (TMT)</option>
-                        <option value="TND">Dinar Tunisiano (TND)</option>
-                        <option value="TOP">Pa'anga Tonganês (TOP)</option>
-                        <option value="TRY">Lira Turca (TRY)</option>
-                        <option value="TTD">Dólar de Trinidad e Tobago (TTD)</option>
-                        <option value="TVD">Dólar de Tuvalu (TVD)</option>
-                        <option value="TWD">Novo Dólar de Taiwan (TWD)</option>
-                        <option value="TZS">Xelim Tanzaniano (TZS)</option>
-                        <option value="UAH">Hryvnia Ucraniana (UAH)</option>
-                        <option value="UGX">Xelim Ugandense (UGX)</option>
-                        <option value="UYU">Peso Uruguaio (UYU)</option>
-                        <option value="UZS">Som Uzbique (UZS)</option>
-                        <option value="VES">Bolívar Venezuelano (VES)</option>
-                        <option value="VND">Dong Vietnamita (VND)</option>
-                        <option value="VUV">Vatu de Vanuatu (VUV)</option>
-                        <option value="WST">Tala Samoana (WST)</option>
-                        <option value="XAF">Franco CFA da África Central (XAF)</option>
-                        <option value="XCD">Dólar do Caribe Oriental (XCD)</option>
-                        <option value="XCG">Florim de Curaçao (XCG)</option>
-                        <option value="XDR">Direitos Especiais de Saque (XDR)</option>
-                        <option value="XOF">Franco CFA da África Ocidental (XOF)</option>
-                        <option value="XPF">Franco CFP (XPF)</option>
-                        <option value="YER">Rial Yemenita (YER)</option>
-                        <option value="ZAR">Rand Sul-Africano (ZAR)</option>
-                        <option value="ZMW">Kwacha Zambiano (ZMW)</option>
-                        <option value="ZWL">Dólar Zimbabuano (ZWL)</option>   
-                    </select>
-            </div>
-        </div>
-        
-        <div style="margin-top: -30px;" class="buttons">
-            <button class="button light-gray" id="limpar-deletar-conversor">AC</button>
-            <button class="button light-gray" onclick="inverterValorConversor()">+/-</button>
-            <button class="button light-gray" onclick="adicionarPorcentagemConversor('%')">%</button>
-            <button class="button yellow" onclick="adicionarOperadorConversor('÷')">÷</button>
-
-            <button class="button dark-gray" onclick="adicionarNumeroConversor('7')">7</button>
-            <button class="button dark-gray" onclick="adicionarNumeroConversor('8')">8</button>
-            <button class="button dark-gray" onclick="adicionarNumeroConversor('9')">9</button>
-            <button class="button yellow" onclick="adicionarOperadorConversor('x')">x</button>
-
-            <button class="button dark-gray" onclick="adicionarNumeroConversor('4')">4</button>
-            <button class="button dark-gray" onclick="adicionarNumeroConversor('5')">5</button>
-            <button class="button dark-gray" onclick="adicionarNumeroConversor('6')">6</button>
-            <button class="button yellow" onclick="adicionarOperadorConversor('-')">-</button>
-
-            <button class="button dark-gray" onclick="adicionarNumeroConversor('1')">1</button>
-            <button class="button dark-gray" onclick="adicionarNumeroConversor('2')">2</button>
-            <button class="button dark-gray" onclick="adicionarNumeroConversor('3')">3</button>
-            <button class="button yellow" onclick="adicionarOperadorConversor('+')">+</button>
-
-            <button class="button light-gray" onclick="mostrarOpcoesConversor()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 23" width="33" height="28">
-                    <rect x="5" y="3" width="14" height="20" rx="2" ry="2" fill="#FFFFFF"/>
-                    <rect x="6.5" y="5" width="10.9" height="4" rx="0.5" ry="0.5" fill="#555555"/>
-                    <circle cx="8" cy="12" r="1.2" fill="#555555"/>
-                    <circle cx="12" cy="12" r="1.2" fill="#555555"/>
-                    <circle cx="16" cy="12" r="1.2" fill="#555555"/>
-                    <circle cx="8" cy="16" r="1.2" fill="#555555"/>
-                    <circle cx="12" cy="16" r="1.2" fill="#555555"/>
-                    <circle cx="16" cy="16" r="1.2" fill="#555555"/>
-                    <circle cx="8" cy="20" r="1.2" fill="#555555"/>
-                    <circle cx="12" cy="20" r="1.2" fill="#555555"/>
-                    <circle cx="16" cy="20" r="1.2" fill="#555555"/>
-                </svg>
-            </button>
-            <button class="button dark-gray" onclick="adicionarNumeroConversor('0')">0</button>
-            <button class="button dark-gray" onclick="adicionarDecimalConversor(',')">,</button>
-            <button class="button yellow" onclick="calcularConversor()">=</button>
-        </div>
-
-        <div id="menu-container-conversor" class="popover-menu hidden">
-            <button id="basica" class="menu-item">Básica</button>
-            <button id="conversao" class="menu-item selected">Conversão</button>
-        </div>
-        <div id="overlay-conversao" class="overlay"></div>
     </div>
 
     <script src="/Calculadora/dist/js/calculadora.js"></script>

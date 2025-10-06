@@ -9,6 +9,8 @@ let historico: string[] = [];
 
 atualizarDisplay();
 limparHistorico();
+calcBasica();
+
 
 // --- Funções da Calculadora ---
 function atualizarDisplay(): void {
@@ -28,6 +30,7 @@ function adicionarNumero(valor: string): void {
 
   entrada += valor; 
   atualizarDisplay();
+  converter();
 }
 
 function adicionarOperador(operador: string): void {
@@ -93,6 +96,7 @@ function limpar(): void {
   entrada = "0";
   atualizarDisplay();
   atualizarUltimaConta("");
+  converter();
 }
 
 function deletar(): void {
@@ -110,6 +114,7 @@ function deletar(): void {
   }
 
   atualizarDisplay();
+  converter();
 }
 
 function limparDeletar() {
@@ -207,7 +212,9 @@ function calcular(): void {
 
   entrada = resultado;
   atualizarDisplay();
+  converter();
 }
+
 
 // --- Funções de Formatação ---
 function formatarSinais(display: string): string {
@@ -263,7 +270,8 @@ function formatarDecimal(s: string): string {
   return s;
 }
 
-// --- Funções de Histórico ---
+
+// --- Funções do Histórico ---
 function atualizarHistorico(): void {
   const listaHistorico = document.getElementById("historico");
   listaHistorico.innerHTML = "";
@@ -383,278 +391,58 @@ document.getElementById("overlay")?.addEventListener("click", fecharOpcoes);
 
 
 function calcBasica() {
-  document.getElementById("calculadora-Basica")!.style.display = "block";
-  document.getElementById("calculadora-Conversao")!.style.display = "none";
+  document.getElementById("calculadora-conversao")!.style.display = "none";
+
+  document.getElementById("conversao")!.style.color = "white";
+  document.getElementById("conversao")!.style.fontWeight = "100";
+
+  document.getElementById("basica")!.style.color = "#ffa500";
+  document.getElementById("basica")!.style.fontWeight = "bold";
 
   fecharOpcoes();
-  fecharOpcoesConversor();
 }
 
 function calcConversao() {
-  document.getElementById("calculadora-Basica")!.style.display = "none";
-  document.getElementById("calculadora-Conversao")!.style.display = "block";
+  document.getElementById("calculadora-conversao")!.style.display = "block";
+
+  document.getElementById("basica")!.style.color = "white";
+  document.getElementById("basica")!.style.fontWeight = "100";
+
+  document.getElementById("conversao")!.style.color = "#ffa500";
+  document.getElementById("conversao")!.style.fontWeight = "bold";
 
   fecharOpcoes();
-  fecharOpcoesConversor();
 }
 document.getElementById("basica")?.addEventListener("click", calcBasica);
 document.getElementById("conversao")?.addEventListener("click", calcConversao);
 
 
 //--- Calculadora de Conversão ---
-const displayConversor = document.getElementById("displayConversor") as HTMLElement; 
-const select = document.getElementById("moeda") as HTMLSelectElement;
-const moedaSelecionada = document.getElementById("moedaSelecionada") as HTMLElement;
-const resultado = document.getElementById("valor-convertido") as HTMLElement;
-let entradaConversor: string = display.textContent;
+const select: HTMLSelectElement = document.getElementById("moeda") as HTMLSelectElement;
+const moedaSelecionada: HTMLElement = document.getElementById("moedaSelecionada") as HTMLElement;
+const resultado: HTMLElement = document.getElementById("valor-convertido") as HTMLElement;
 
 resultado.textContent = "0,00";
-atualizarDisplayConversor();
-
-
-// --- Funções da Calculadora de Conversão ---
-function atualizarDisplayConversor(): void {
-  displayConversor.textContent = entradaConversor;
-  limparDeletarConversor?.();
-  displayConversor.scrollLeft = displayConversor.scrollWidth;
-}
-
-function adicionarNumeroConversor(valor: string): void {
-  if (entradaConversor === "0") {
-    entradaConversor = "";
-  } else if (entradaConversor.endsWith("%") || entradaConversor.endsWith(")")) {
-    return;
-  }
-
-  entradaConversor += valor; 
-  atualizarDisplayConversor();
-  converter();
-}
-
-function adicionarOperadorConversor(operador: string): void {
-  const ultString: string = entradaConversor.trim().slice(-1);
-
-  if (ultString === operador) {
-    return;
-  } else if (entradaConversor === "0" && !sinais.includes(operador)) {
-    entradaConversor = operador + " ";
-  } else if (sinais.includes(ultString)) {
-    entradaConversor = entradaConversor.slice(0, -2) + operador + " ";
-  } else if (ultString === ",") {
-    entradaConversor += "00 " + operador + " ";
-  } else {
-    entradaConversor += " " + operador + " ";
-  }
-
-  atualizarDisplayConversor();
-}
-
-function adicionarDecimalConversor(ponto: string): void {
-  const sinal: number = entradaConversor.search(/[+\-÷x](?!.*[+\-÷x])/);
-  const contaAtual: string = entradaConversor.slice(sinal + 1);
-
-  if (contaAtual.includes(ponto)) {
-    return;
-  } else if (contaAtual === " ") {
-    entradaConversor += "0" + ponto;
-  } else {
-    entradaConversor += ponto;
-  }
-
-  atualizarDisplayConversor();
-}
-
-function adicionarPorcentagemConversor(sPorcentagem: string): void {
-  const ultString: string = entradaConversor.trim().slice(-1);
-  const perc: number = entradaConversor.lastIndexOf(")");
-  const penulSinal: number = entradaConversor.search(/.*[+\-x÷](?!.*[+\-x÷])/);
-
-  if (
-    entradaConversor === "0" ||
-    entradaConversor.endsWith("%") ||
-    entradaConversor.substring(0, perc).endsWith(sPorcentagem)
-  ) {
-    return;
-  } else if (entradaConversor.trim().endsWith(")")) {
-    entradaConversor =
-      entradaConversor.substring(0, perc) + sPorcentagem + entradaConversor.substring(perc);
-  } else if (
-    entradaConversor.substring(penulSinal - 2) === "%" &&
-    sinais.includes(ultString)
-  ) {
-    entradaConversor = entradaConversor.replace(entradaConversor.trim().slice(-1), sPorcentagem);
-  } else if (numeros.includes(ultString)) {
-    entradaConversor += sPorcentagem;
-  }
-
-  atualizarDisplayConversor();
-}
-
-function limparConversor(): void {
-  entradaConversor = "0";
-  atualizarDisplayConversor();
-}
-
-function deletarConversor(): void {
-  const final: boolean = sinais.includes(entradaConversor.trim().slice(-1));
-
-  if (entradaConversor === "0" || entradaConversor.trim().endsWith(")")) {
-    return;
-  } else if (final || entradaConversor.endsWith(" ")) {
-    entradaConversor = entradaConversor.slice(0, -3);
-  } else {
-    entradaConversor = entradaConversor.slice(0, -1);
-    if (entradaConversor === "") {
-      entradaConversor = "0";
-    }
-  }
-
-  atualizarDisplayConversor();
-}
-
-function limparDeletarConversor() {
-  const limparDeletar: HTMLElement = document.getElementById('limpar-deletar-conversor');
-
-  let timeout: number;
-
-  limparDeletar.addEventListener("mousedown", () => {
-    timeout = window.setTimeout(() => {
-      limpar();
-    }, 800);
-  })
-
-  limparDeletar.addEventListener("mouseup", () => {
-    clearTimeout(timeout);
-  })
-
-  limparDeletar.addEventListener("mouseleave", () => {
-      clearTimeout(timeout);
-  });
-
-  if (entradaConversor.length < 2) {
-    limparDeletar.textContent = "AC";
-    limparDeletar.onclick = limparConversor;
-  } else {
-    const svg: string = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24"
-        viewBox="0 -1 24 24" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 19L-1 12l6-7h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6z"/>
-        <line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/>
-        <line x1="14.5" y1="9.5" x2="9.5" y2="14.5"/>
-      </svg>
-    `;
-
-    limparDeletar.innerHTML = svg;
-    limparDeletar.onclick = deletarConversor;  
-  }
-
-  converter();
-}
-
-function inverterValorConversor(): void {
-  const sinais: string[] = ["+", "x", "÷"];
-  const sinal: number = entradaConversor.search(/[+÷x](?!.*[+÷x])/);
-  let pConta: string = entradaConversor.slice(0, sinal + 1);
-  let contaS: string = entradaConversor.slice(sinal + 1);
-  const neg: number = entradaConversor.lastIndexOf("-");
-  const parenteses: number = entradaConversor.lastIndexOf("(-");
-  let ultNeg: string = entradaConversor.slice(parenteses + 3, neg + 1);
-
-  if (ultNeg.endsWith("-") && !contaS.endsWith(" ")) {
-    const indice: number = ultNeg.lastIndexOf("-");
-    entradaConversor =
-      entradaConversor.substring(0, indice + 1) + " + " + entradaConversor.substring(indice + 3);
-
-    entradaConversor = entradaConversor;
-  } else {
-    if (entradaConversor === "0" || contaS.endsWith(" ")) {
-      return;
-    } else if (sinais.includes(pConta.slice(-1))) {
-      if (!contaS.trim().startsWith("(-")) {
-        contaS = " (-" + contaS + ")";
-      } else {
-        contaS = contaS.slice(3, -1);
-      }
-
-      entradaConversor = pConta + contaS;
-    } else if (!entradaConversor.trim().startsWith("(-")) {
-      pConta = "(- " + entradaConversor + ")";
-
-      entradaConversor = pConta;
-    } else {
-      entradaConversor = entradaConversor.slice(2, -1);
-    }
-  }
-
-  atualizarDisplayConversor();
-}
-
-function calcularConversor(): void {
-  let resultado: string = formatarSinais(entradaConversor);
-
-  if (resultado.includes("%")) {
-    resultado = formatarPorcentagem(resultado);
-  }
-
-  resultado = eval(resultado);
-
-  if (!Number.isInteger(resultado)) {
-    resultado = formatarDecimal(resultado);
-  }
-
-  entradaConversor = resultado;
-  atualizarDisplayConversor();
-}
-
-// --- Menu Tipo da Calculadora Conversor ---
-function mostrarOpcoesConversor() {
-  const menu: HTMLElement = document.getElementById("menu-container-conversor");
-  const overlay: HTMLElement = document.getElementById("overlay-conversao");
-
-  const ativo = menu?.classList.toggle("active");
-
-  if (ativo) {
-    overlay?.classList.add("ativo");
-  } else {
-    overlay?.classList.remove("ativo");
-  }
-}
-
-function fecharOpcoesConversor() {
-  const menu: HTMLElement = document.getElementById("menu-container-conversor");
-  const overlay: HTMLElement = document.getElementById("overlay-conversao");
-
-  overlay?.classList.remove("ativo");
-  menu?.classList.remove("active");
-}
-document.getElementById("overlay-conversao")?.addEventListener("click", fecharOpcoesConversor);
-
 
 select.addEventListener("change", () => {
   moedaSelecionada.textContent = select.value;
   converter();
 });
 
-
-// --- Conversor ---
+// --- Conversor --- 
 function converter(): void {
-  let valor: string = displayConversor.textContent;
+  let valor: string = display.textContent;
   const moeda: string = select.value;
 
-  if (/[+\-*/]/.test(valor)) {
-    valor = formatarSinais(valor)
-  } else if (valor.includes("%")) {
-    valor = formatarDecimal(valor)
+  if (sinais.includes(valor) || valor.includes("%")) {
+    valor = formatarPorcentagem(formatarSinais(valor));
   }
 
-  valor = eval(valor)
+  valor = eval(valor);
 
   if (!Number.isInteger(valor)) {
-    valor = formatarDecimal(valor)
+    valor = formatarDecimal(valor);
   }
-
-  const valorF: number = parseFloat(valor);
 
   const apiUrl = `https://v6.exchangerate-api.com/v6/2759982764cc197890048b48/latest/BRL`;
 
@@ -662,7 +450,7 @@ function converter(): void {
     .then(response => response.json())
     .then(data => {
       const conversao: number = data.conversion_rates[moeda];
-      const valorConvertido: number = valorF * conversao;
+      let valorConvertido: number = parseFloat(valor) * conversao;
 
       resultado.textContent = `${formatarDecimal(valorConvertido.toFixed(2))}`;
     })

@@ -156,10 +156,17 @@ body {
   font-size: 30px;
   padding: 15px;
   border-radius: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 50px;
+  margin-top: -35px;
   min-height: 40px;
   position: relative;
   overflow: hidden;
+  z-index: 1;
+}
+
+input {
+  background-color: black;
+  border: none;
 }
 
 .display-inner {
@@ -191,14 +198,16 @@ body {
   color: #aaa;
   text-align: left;
   position: absolute;
-  top: 7px;
-  left: 10px;
-  right: 55px;
+  margin-top: -30px;
+  left: 8%;
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-color: #ffa500;
   cursor: pointer;
+  z-index: 2;
+  max-width: 250px;
+  width: 100%;
 }
 
 .display-historico::-webkit-scrollbar {
@@ -265,16 +274,17 @@ body {
   background-color: #333333;
   position: relative;
   left: 140px;
-  bottom: 88px;
+  bottom: 9px;
+  z-index: 2;
 }
 
 .linha {
-  width: 682%;
+  width: 700%;
   height: 1px;
   background-color: #333333;
   position: relative;
-  top: 3.8px;
-  right: 279px;
+  top: 4px;
+  right: 283px;
 }
 
 .popover-menu {
@@ -311,77 +321,42 @@ body {
   padding: 10px;
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.3s;
   white-space: nowrap;
+
+  display: flex;              /* coloca ícone e texto lado a lado */
+  align-items: center;        /* centraliza verticalmente */
+  gap: 10px;                   /* espaço entre o ícone e o texto */
 }
 
-.menu-item:hover:not(.selected) {
+.menu-item:hover {
   background-color: #444444;
-}
-
-.menu-item.selected {
   color: #ffa500;
-  font-weight: bold;
 }
 
 
 /* Calculadora Conversora */
-
-.displayConversor {
-  background-color: black;
-  color: #fff;
-  font-size: 30px;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 45px;
-  min-height: 80px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.display-inner-conversor {
-  white-space: nowrap;
-  overflow-x: auto;
-  text-align: right;
-  font-size: 30px;
-  padding: 5px 15px;
-}
-
 .display-convertido {
-  display: flex;              /* torna flex container */
-  justify-content: flex-end;  /* cola o número na direita */
-  align-items: center;        /* centraliza na vertical (opcional) */
-  overflow: hidden;           /* impede barra de rolagem */
-  padding: 5px 15px;
+  background-color: black;
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  overflow: hidden;
+  padding: 20px 25px;
   font-size: 30px;
   white-space: nowrap;
   text-align: right;
-}
-
-.display-inner-conversor::-webkit-scrollbar,
-.display-convertido::-webkit-scrollbar {
-  height: 3px;
-}
-
-.display-inner-conversor::-webkit-scrollbar-thumb,
-.display-convertido::-webkit-scrollbar-thumb {
-  background-color: #ffa500;
-  border-radius: 15px;
-}
-
-.display-inner-conversor::-webkit-scrollbar-thumb:hover,
-.display-convertido::-webkit-scrollbar-thumb:hover {
-  cursor: pointer;
+  border-radius: 0px 0px 15px 15px;
 }
 
 .linha-conversor {
-  width: 100%;
-  height: 1px;
-  background-color: #333333;
-  margin: 5px 0;
+  width: 90%;
+  height: 0.5px;
+  background-color: #333;
+  position: relative;
+  top: 10px;
+  left: 15px;
+  z-index: 2;
 }
 
 .container-moeda {
@@ -399,7 +374,7 @@ body {
   border: none;
   background: none;
   position: relative;
-  right: 254px;
+  right: 265px;
   bottom: 19px;
   cursor: pointer;
 
@@ -446,4 +421,9 @@ body {
   background-color: #ffa500;
   border-radius: 15px;
   cursor: pointer;
+}
+
+#calculadora-conversao {
+  margin-top: -60px;
+  margin-bottom: 40px;
 }
