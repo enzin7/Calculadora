@@ -276,3 +276,174 @@ body {
   top: 3.8px;
   right: 279px;
 }
+
+.popover-menu {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(44, 44, 44, 1);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  min-width: 156px;
+  transform: translateY(20px) scale(0.8);
+  transform-origin: bottom left; 
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), 
+              opacity 0.25s ease-out;
+  pointer-events: none;
+}
+
+.popover-menu.active {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-item {
+  background: none;
+  border: none;
+  color: #ffffff;
+  text-align: left;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.menu-item:hover:not(.selected) {
+  background-color: #444444;
+}
+
+.menu-item.selected {
+  color: #ffa500;
+  font-weight: bold;
+}
+
+
+/* Calculadora Conversora */
+
+.displayConversor {
+  background-color: black;
+  color: #fff;
+  font-size: 30px;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 45px;
+  min-height: 80px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.display-inner-conversor {
+  white-space: nowrap;
+  overflow-x: auto;
+  text-align: right;
+  font-size: 30px;
+  padding: 5px 15px;
+}
+
+.display-convertido {
+  display: flex;              /* torna flex container */
+  justify-content: flex-end;  /* cola o número na direita */
+  align-items: center;        /* centraliza na vertical (opcional) */
+  overflow: hidden;           /* impede barra de rolagem */
+  padding: 5px 15px;
+  font-size: 30px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.display-inner-conversor::-webkit-scrollbar,
+.display-convertido::-webkit-scrollbar {
+  height: 3px;
+}
+
+.display-inner-conversor::-webkit-scrollbar-thumb,
+.display-convertido::-webkit-scrollbar-thumb {
+  background-color: #ffa500;
+  border-radius: 15px;
+}
+
+.display-inner-conversor::-webkit-scrollbar-thumb:hover,
+.display-convertido::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+}
+
+.linha-conversor {
+  width: 100%;
+  height: 1px;
+  background-color: #333333;
+  margin: 5px 0;
+}
+
+.container-moeda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 90%;
+}
+
+.select-moeda {
+  width: 0;
+  padding: 4px 10px;
+  white-space: nowrap;
+  color: black;
+  border: none;
+  background: none;
+  position: relative;
+  right: 254px;
+  bottom: 19px;
+  cursor: pointer;
+
+  appearance: none;           /* remove estilo padrão do navegador */
+  -webkit-appearance: none;   /* Safari/Chrome */
+  -moz-appearance: none;      /* Firefox */
+}
+
+.select-moeda {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="orange" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+
+.moeda-selecionada {
+  color: #333333;
+  flex-shrink: 0;
+  margin-top: 9px;
+  margin-right: -35px;
+}
+
+.valor-convertido {
+  font-size: 30px;
+  white-space: nowrap;
+  margin-bottom: -5px;
+  flex-shrink: 1;       /* pode encolher se precisar */
+  min-width: 0;         /* permite encolher corretamente */
+  text-overflow: clip;  /* evita quebrar */
+}
+
+.valor-wrapper {
+  flex: 1;                /* ocupa o espaço que sobrar */
+  overflow-x: auto;        /* só o valor tem rolagem */
+  white-space: nowrap;
+  text-align: right;
+}
+
+.valor-wrapper::-webkit-scrollbar {
+  height: 3px;
+}
+
+.valor-wrapper::-webkit-scrollbar-thumb {
+  background-color: #ffa500;
+  border-radius: 15px;
+  cursor: pointer;
+}

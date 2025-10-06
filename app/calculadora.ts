@@ -14,7 +14,8 @@ limparHistorico();
 function atualizarDisplay(): void {
   display.textContent = entrada;
   entrada = display.textContent;
-
+  limparDeletar();
+  
   display.scrollLeft = display.scrollWidth;
 }
 
@@ -25,7 +26,7 @@ function adicionarNumero(valor: string): void {
     return;
   }
 
-  entrada += valor;
+  entrada += valor; 
   atualizarDisplay();
 }
 
@@ -109,6 +110,44 @@ function deletar(): void {
   }
 
   atualizarDisplay();
+}
+
+function limparDeletar() {
+  const limparDeletar: HTMLElement = document.getElementById('limpar-deletar');
+
+  let timeout: number;
+
+  limparDeletar.addEventListener("mousedown", () => {
+    timeout = window.setTimeout(() => {
+      limpar();
+    }, 800);
+  })
+
+  limparDeletar.addEventListener("mouseup", () => {
+    clearTimeout(timeout);
+  })
+
+  limparDeletar.addEventListener("mouseleave", () => {
+      clearTimeout(timeout);
+  });
+
+  if (entrada.length < 2) {
+    limparDeletar.textContent = "AC";
+    limparDeletar.onclick = limpar;
+  } else {
+    const svg: string = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24"
+        viewBox="0 -1 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 19L-1 12l6-7h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6z"/>
+        <line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/>
+        <line x1="14.5" y1="9.5" x2="9.5" y2="14.5"/>
+      </svg>
+    `;
+
+    limparDeletar.innerHTML = svg;
+    limparDeletar.onclick = deletar;  
+  }
 }
 
 function inverterValor(): void {
@@ -289,7 +328,7 @@ function limparHistorico(): void {
 }
 
 function mostrarHistorico(): void {
-  const containerHistorico = document.getElementById("containerHistorico");
+  const containerHistorico: HTMLElement = document.getElementById("containerHistorico");
   const overlay = document.getElementById("overlay");
 
   containerHistorico?.classList.add("ativo");
@@ -297,8 +336,8 @@ function mostrarHistorico(): void {
 }
 
 function fecharHistorico(): void {
-  const containerHistorico = document.getElementById("containerHistorico");
-  const overlay = document.getElementById("overlay");
+  const containerHistorico: HTMLElement = document.getElementById("containerHistorico");
+  const overlay: HTMLElement = document.getElementById("overlay");
 
   containerHistorico?.classList.remove("ativo");
   overlay?.classList.remove("ativo");
@@ -316,4 +355,318 @@ function antigaConta(antigaConta: string): void {
 
   atualizarDisplay();
   atualizarUltimaConta("");
+}
+
+
+// --- Menu Tipo da Calculadora ---
+function mostrarOpcoes() {
+  const menu: HTMLElement = document.getElementById("menu-container");
+  const overlay: HTMLElement = document.getElementById("overlay");
+
+  const ativo = menu?.classList.toggle("active");
+
+  if (ativo) {
+    overlay?.classList.add("ativo");
+  } else {
+    overlay?.classList.remove("ativo");
+  }
+}
+
+function fecharOpcoes() {
+  const menu: HTMLElement = document.getElementById("menu-container");
+  const overlay: HTMLElement = document.getElementById("overlay");
+
+  overlay?.classList.remove("ativo");
+  menu?.classList.remove("active");
+}
+document.getElementById("overlay")?.addEventListener("click", fecharOpcoes);
+
+
+function calcBasica() {
+  document.getElementById("calculadora-Basica")!.style.display = "block";
+  document.getElementById("calculadora-Conversao")!.style.display = "none";
+
+  fecharOpcoes();
+  fecharOpcoesConversor();
+}
+
+function calcConversao() {
+  document.getElementById("calculadora-Basica")!.style.display = "none";
+  document.getElementById("calculadora-Conversao")!.style.display = "block";
+
+  fecharOpcoes();
+  fecharOpcoesConversor();
+}
+document.getElementById("basica")?.addEventListener("click", calcBasica);
+document.getElementById("conversao")?.addEventListener("click", calcConversao);
+
+
+//--- Calculadora de Conversão ---
+const displayConversor = document.getElementById("displayConversor") as HTMLElement; 
+const select = document.getElementById("moeda") as HTMLSelectElement;
+const moedaSelecionada = document.getElementById("moedaSelecionada") as HTMLElement;
+const resultado = document.getElementById("valor-convertido") as HTMLElement;
+let entradaConversor: string = display.textContent;
+
+resultado.textContent = "0,00";
+atualizarDisplayConversor();
+
+
+// --- Funções da Calculadora de Conversão ---
+function atualizarDisplayConversor(): void {
+  displayConversor.textContent = entradaConversor;
+  limparDeletarConversor?.();
+  displayConversor.scrollLeft = displayConversor.scrollWidth;
+}
+
+function adicionarNumeroConversor(valor: string): void {
+  if (entradaConversor === "0") {
+    entradaConversor = "";
+  } else if (entradaConversor.endsWith("%") || entradaConversor.endsWith(")")) {
+    return;
+  }
+
+  entradaConversor += valor; 
+  atualizarDisplayConversor();
+  converter();
+}
+
+function adicionarOperadorConversor(operador: string): void {
+  const ultString: string = entradaConversor.trim().slice(-1);
+
+  if (ultString === operador) {
+    return;
+  } else if (entradaConversor === "0" && !sinais.includes(operador)) {
+    entradaConversor = operador + " ";
+  } else if (sinais.includes(ultString)) {
+    entradaConversor = entradaConversor.slice(0, -2) + operador + " ";
+  } else if (ultString === ",") {
+    entradaConversor += "00 " + operador + " ";
+  } else {
+    entradaConversor += " " + operador + " ";
+  }
+
+  atualizarDisplayConversor();
+}
+
+function adicionarDecimalConversor(ponto: string): void {
+  const sinal: number = entradaConversor.search(/[+\-÷x](?!.*[+\-÷x])/);
+  const contaAtual: string = entradaConversor.slice(sinal + 1);
+
+  if (contaAtual.includes(ponto)) {
+    return;
+  } else if (contaAtual === " ") {
+    entradaConversor += "0" + ponto;
+  } else {
+    entradaConversor += ponto;
+  }
+
+  atualizarDisplayConversor();
+}
+
+function adicionarPorcentagemConversor(sPorcentagem: string): void {
+  const ultString: string = entradaConversor.trim().slice(-1);
+  const perc: number = entradaConversor.lastIndexOf(")");
+  const penulSinal: number = entradaConversor.search(/.*[+\-x÷](?!.*[+\-x÷])/);
+
+  if (
+    entradaConversor === "0" ||
+    entradaConversor.endsWith("%") ||
+    entradaConversor.substring(0, perc).endsWith(sPorcentagem)
+  ) {
+    return;
+  } else if (entradaConversor.trim().endsWith(")")) {
+    entradaConversor =
+      entradaConversor.substring(0, perc) + sPorcentagem + entradaConversor.substring(perc);
+  } else if (
+    entradaConversor.substring(penulSinal - 2) === "%" &&
+    sinais.includes(ultString)
+  ) {
+    entradaConversor = entradaConversor.replace(entradaConversor.trim().slice(-1), sPorcentagem);
+  } else if (numeros.includes(ultString)) {
+    entradaConversor += sPorcentagem;
+  }
+
+  atualizarDisplayConversor();
+}
+
+function limparConversor(): void {
+  entradaConversor = "0";
+  atualizarDisplayConversor();
+}
+
+function deletarConversor(): void {
+  const final: boolean = sinais.includes(entradaConversor.trim().slice(-1));
+
+  if (entradaConversor === "0" || entradaConversor.trim().endsWith(")")) {
+    return;
+  } else if (final || entradaConversor.endsWith(" ")) {
+    entradaConversor = entradaConversor.slice(0, -3);
+  } else {
+    entradaConversor = entradaConversor.slice(0, -1);
+    if (entradaConversor === "") {
+      entradaConversor = "0";
+    }
+  }
+
+  atualizarDisplayConversor();
+}
+
+function limparDeletarConversor() {
+  const limparDeletar: HTMLElement = document.getElementById('limpar-deletar-conversor');
+
+  let timeout: number;
+
+  limparDeletar.addEventListener("mousedown", () => {
+    timeout = window.setTimeout(() => {
+      limpar();
+    }, 800);
+  })
+
+  limparDeletar.addEventListener("mouseup", () => {
+    clearTimeout(timeout);
+  })
+
+  limparDeletar.addEventListener("mouseleave", () => {
+      clearTimeout(timeout);
+  });
+
+  if (entradaConversor.length < 2) {
+    limparDeletar.textContent = "AC";
+    limparDeletar.onclick = limparConversor;
+  } else {
+    const svg: string = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24"
+        viewBox="0 -1 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 19L-1 12l6-7h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6z"/>
+        <line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/>
+        <line x1="14.5" y1="9.5" x2="9.5" y2="14.5"/>
+      </svg>
+    `;
+
+    limparDeletar.innerHTML = svg;
+    limparDeletar.onclick = deletarConversor;  
+  }
+
+  converter();
+}
+
+function inverterValorConversor(): void {
+  const sinais: string[] = ["+", "x", "÷"];
+  const sinal: number = entradaConversor.search(/[+÷x](?!.*[+÷x])/);
+  let pConta: string = entradaConversor.slice(0, sinal + 1);
+  let contaS: string = entradaConversor.slice(sinal + 1);
+  const neg: number = entradaConversor.lastIndexOf("-");
+  const parenteses: number = entradaConversor.lastIndexOf("(-");
+  let ultNeg: string = entradaConversor.slice(parenteses + 3, neg + 1);
+
+  if (ultNeg.endsWith("-") && !contaS.endsWith(" ")) {
+    const indice: number = ultNeg.lastIndexOf("-");
+    entradaConversor =
+      entradaConversor.substring(0, indice + 1) + " + " + entradaConversor.substring(indice + 3);
+
+    entradaConversor = entradaConversor;
+  } else {
+    if (entradaConversor === "0" || contaS.endsWith(" ")) {
+      return;
+    } else if (sinais.includes(pConta.slice(-1))) {
+      if (!contaS.trim().startsWith("(-")) {
+        contaS = " (-" + contaS + ")";
+      } else {
+        contaS = contaS.slice(3, -1);
+      }
+
+      entradaConversor = pConta + contaS;
+    } else if (!entradaConversor.trim().startsWith("(-")) {
+      pConta = "(- " + entradaConversor + ")";
+
+      entradaConversor = pConta;
+    } else {
+      entradaConversor = entradaConversor.slice(2, -1);
+    }
+  }
+
+  atualizarDisplayConversor();
+}
+
+function calcularConversor(): void {
+  let resultado: string = formatarSinais(entradaConversor);
+
+  if (resultado.includes("%")) {
+    resultado = formatarPorcentagem(resultado);
+  }
+
+  resultado = eval(resultado);
+
+  if (!Number.isInteger(resultado)) {
+    resultado = formatarDecimal(resultado);
+  }
+
+  entradaConversor = resultado;
+  atualizarDisplayConversor();
+}
+
+// --- Menu Tipo da Calculadora Conversor ---
+function mostrarOpcoesConversor() {
+  const menu: HTMLElement = document.getElementById("menu-container-conversor");
+  const overlay: HTMLElement = document.getElementById("overlay-conversao");
+
+  const ativo = menu?.classList.toggle("active");
+
+  if (ativo) {
+    overlay?.classList.add("ativo");
+  } else {
+    overlay?.classList.remove("ativo");
+  }
+}
+
+function fecharOpcoesConversor() {
+  const menu: HTMLElement = document.getElementById("menu-container-conversor");
+  const overlay: HTMLElement = document.getElementById("overlay-conversao");
+
+  overlay?.classList.remove("ativo");
+  menu?.classList.remove("active");
+}
+document.getElementById("overlay-conversao")?.addEventListener("click", fecharOpcoesConversor);
+
+
+select.addEventListener("change", () => {
+  moedaSelecionada.textContent = select.value;
+  converter();
+});
+
+
+// --- Conversor ---
+function converter(): void {
+  let valor: string = displayConversor.textContent;
+  const moeda: string = select.value;
+
+  if (/[+\-*/]/.test(valor)) {
+    valor = formatarSinais(valor)
+  } else if (valor.includes("%")) {
+    valor = formatarDecimal(valor)
+  }
+
+  valor = eval(valor)
+
+  if (!Number.isInteger(valor)) {
+    valor = formatarDecimal(valor)
+  }
+
+  const valorF: number = parseFloat(valor);
+
+  const apiUrl = `https://v6.exchangerate-api.com/v6/2759982764cc197890048b48/latest/BRL`;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      const conversao: number = data.conversion_rates[moeda];
+      const valorConvertido: number = valorF * conversao;
+
+      resultado.textContent = `${formatarDecimal(valorConvertido.toFixed(2))}`;
+    })
+    .catch(() => {
+      resultado.textContent = "ERRO ao buscar a taxa de câmbio";
+    });
 }

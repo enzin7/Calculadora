@@ -11,6 +11,7 @@ limparHistorico();
 function atualizarDisplay() {
     display.textContent = entrada;
     entrada = display.textContent;
+    limparDeletar();
     display.scrollLeft = display.scrollWidth;
 }
 function adicionarNumero(valor) {
@@ -98,6 +99,38 @@ function deletar() {
         }
     }
     atualizarDisplay();
+}
+function limparDeletar() {
+    const limparDeletar = document.getElementById('limpar-deletar');
+    let timeout;
+    limparDeletar.addEventListener("mousedown", () => {
+        timeout = window.setTimeout(() => {
+            limpar();
+        }, 800);
+    });
+    limparDeletar.addEventListener("mouseup", () => {
+        clearTimeout(timeout);
+    });
+    limparDeletar.addEventListener("mouseleave", () => {
+        clearTimeout(timeout);
+    });
+    if (entrada.length < 2) {
+        limparDeletar.textContent = "AC";
+        limparDeletar.onclick = limpar;
+    }
+    else {
+        const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24"
+        viewBox="0 -1 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 19L-1 12l6-7h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6z"/>
+        <line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/>
+        <line x1="14.5" y1="9.5" x2="9.5" y2="14.5"/>
+      </svg>
+    `;
+        limparDeletar.innerHTML = svg;
+        limparDeletar.onclick = deletar;
+    }
 }
 function inverterValor() {
     const sinais = ["+", "x", "÷"];
@@ -253,4 +286,269 @@ function antigaConta(antigaConta) {
     entrada = antigaConta;
     atualizarDisplay();
     atualizarUltimaConta("");
+}
+// --- Menu Tipo da Calculadora ---
+function mostrarOpcoes() {
+    const menu = document.getElementById("menu-container");
+    const overlay = document.getElementById("overlay");
+    const ativo = menu?.classList.toggle("active");
+    if (ativo) {
+        overlay?.classList.add("ativo");
+    }
+    else {
+        overlay?.classList.remove("ativo");
+    }
+}
+function fecharOpcoes() {
+    const menu = document.getElementById("menu-container");
+    const overlay = document.getElementById("overlay");
+    overlay?.classList.remove("ativo");
+    menu?.classList.remove("active");
+}
+document.getElementById("overlay")?.addEventListener("click", fecharOpcoes);
+function calcBasica() {
+    document.getElementById("calculadora-Basica").style.display = "block";
+    document.getElementById("calculadora-Conversao").style.display = "none";
+    fecharOpcoes();
+    fecharOpcoesConversor();
+}
+function calcConversao() {
+    document.getElementById("calculadora-Basica").style.display = "none";
+    document.getElementById("calculadora-Conversao").style.display = "block";
+    fecharOpcoes();
+    fecharOpcoesConversor();
+}
+document.getElementById("basica")?.addEventListener("click", calcBasica);
+document.getElementById("conversao")?.addEventListener("click", calcConversao);
+//--- Calculadora de Conversão ---
+const displayConversor = document.getElementById("displayConversor");
+const select = document.getElementById("moeda");
+const moedaSelecionada = document.getElementById("moedaSelecionada");
+const resultado = document.getElementById("valor-convertido");
+let entradaConversor = display.textContent;
+resultado.textContent = "0,00";
+atualizarDisplayConversor();
+// --- Funções da Calculadora de Conversão ---
+function atualizarDisplayConversor() {
+    displayConversor.textContent = entradaConversor;
+    limparDeletarConversor?.();
+    displayConversor.scrollLeft = displayConversor.scrollWidth;
+}
+function adicionarNumeroConversor(valor) {
+    if (entradaConversor === "0") {
+        entradaConversor = "";
+    }
+    else if (entradaConversor.endsWith("%") || entradaConversor.endsWith(")")) {
+        return;
+    }
+    entradaConversor += valor;
+    atualizarDisplayConversor();
+    converter();
+}
+function adicionarOperadorConversor(operador) {
+    const ultString = entradaConversor.trim().slice(-1);
+    if (ultString === operador) {
+        return;
+    }
+    else if (entradaConversor === "0" && !sinais.includes(operador)) {
+        entradaConversor = operador + " ";
+    }
+    else if (sinais.includes(ultString)) {
+        entradaConversor = entradaConversor.slice(0, -2) + operador + " ";
+    }
+    else if (ultString === ",") {
+        entradaConversor += "00 " + operador + " ";
+    }
+    else {
+        entradaConversor += " " + operador + " ";
+    }
+    atualizarDisplayConversor();
+}
+function adicionarDecimalConversor(ponto) {
+    const sinal = entradaConversor.search(/[+\-÷x](?!.*[+\-÷x])/);
+    const contaAtual = entradaConversor.slice(sinal + 1);
+    if (contaAtual.includes(ponto)) {
+        return;
+    }
+    else if (contaAtual === " ") {
+        entradaConversor += "0" + ponto;
+    }
+    else {
+        entradaConversor += ponto;
+    }
+    atualizarDisplayConversor();
+}
+function adicionarPorcentagemConversor(sPorcentagem) {
+    const ultString = entradaConversor.trim().slice(-1);
+    const perc = entradaConversor.lastIndexOf(")");
+    const penulSinal = entradaConversor.search(/.*[+\-x÷](?!.*[+\-x÷])/);
+    if (entradaConversor === "0" ||
+        entradaConversor.endsWith("%") ||
+        entradaConversor.substring(0, perc).endsWith(sPorcentagem)) {
+        return;
+    }
+    else if (entradaConversor.trim().endsWith(")")) {
+        entradaConversor =
+            entradaConversor.substring(0, perc) + sPorcentagem + entradaConversor.substring(perc);
+    }
+    else if (entradaConversor.substring(penulSinal - 2) === "%" &&
+        sinais.includes(ultString)) {
+        entradaConversor = entradaConversor.replace(entradaConversor.trim().slice(-1), sPorcentagem);
+    }
+    else if (numeros.includes(ultString)) {
+        entradaConversor += sPorcentagem;
+    }
+    atualizarDisplayConversor();
+}
+function limparConversor() {
+    entradaConversor = "0";
+    atualizarDisplayConversor();
+}
+function deletarConversor() {
+    const final = sinais.includes(entradaConversor.trim().slice(-1));
+    if (entradaConversor === "0" || entradaConversor.trim().endsWith(")")) {
+        return;
+    }
+    else if (final || entradaConversor.endsWith(" ")) {
+        entradaConversor = entradaConversor.slice(0, -3);
+    }
+    else {
+        entradaConversor = entradaConversor.slice(0, -1);
+        if (entradaConversor === "") {
+            entradaConversor = "0";
+        }
+    }
+    atualizarDisplayConversor();
+}
+function limparDeletarConversor() {
+    const limparDeletar = document.getElementById('limpar-deletar-conversor');
+    let timeout;
+    limparDeletar.addEventListener("mousedown", () => {
+        timeout = window.setTimeout(() => {
+            limpar();
+        }, 800);
+    });
+    limparDeletar.addEventListener("mouseup", () => {
+        clearTimeout(timeout);
+    });
+    limparDeletar.addEventListener("mouseleave", () => {
+        clearTimeout(timeout);
+    });
+    if (entradaConversor.length < 2) {
+        limparDeletar.textContent = "AC";
+        limparDeletar.onclick = limparConversor;
+    }
+    else {
+        const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24"
+        viewBox="0 -1 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 19L-1 12l6-7h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6z"/>
+        <line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/>
+        <line x1="14.5" y1="9.5" x2="9.5" y2="14.5"/>
+      </svg>
+    `;
+        limparDeletar.innerHTML = svg;
+        limparDeletar.onclick = deletarConversor;
+    }
+    converter();
+}
+function inverterValorConversor() {
+    const sinais = ["+", "x", "÷"];
+    const sinal = entradaConversor.search(/[+÷x](?!.*[+÷x])/);
+    let pConta = entradaConversor.slice(0, sinal + 1);
+    let contaS = entradaConversor.slice(sinal + 1);
+    const neg = entradaConversor.lastIndexOf("-");
+    const parenteses = entradaConversor.lastIndexOf("(-");
+    let ultNeg = entradaConversor.slice(parenteses + 3, neg + 1);
+    if (ultNeg.endsWith("-") && !contaS.endsWith(" ")) {
+        const indice = ultNeg.lastIndexOf("-");
+        entradaConversor =
+            entradaConversor.substring(0, indice + 1) + " + " + entradaConversor.substring(indice + 3);
+        entradaConversor = entradaConversor;
+    }
+    else {
+        if (entradaConversor === "0" || contaS.endsWith(" ")) {
+            return;
+        }
+        else if (sinais.includes(pConta.slice(-1))) {
+            if (!contaS.trim().startsWith("(-")) {
+                contaS = " (-" + contaS + ")";
+            }
+            else {
+                contaS = contaS.slice(3, -1);
+            }
+            entradaConversor = pConta + contaS;
+        }
+        else if (!entradaConversor.trim().startsWith("(-")) {
+            pConta = "(- " + entradaConversor + ")";
+            entradaConversor = pConta;
+        }
+        else {
+            entradaConversor = entradaConversor.slice(2, -1);
+        }
+    }
+    atualizarDisplayConversor();
+}
+function calcularConversor() {
+    let resultado = formatarSinais(entradaConversor);
+    if (resultado.includes("%")) {
+        resultado = formatarPorcentagem(resultado);
+    }
+    resultado = eval(resultado);
+    if (!Number.isInteger(resultado)) {
+        resultado = formatarDecimal(resultado);
+    }
+    entradaConversor = resultado;
+    atualizarDisplayConversor();
+}
+// --- Menu Tipo da Calculadora Conversor ---
+function mostrarOpcoesConversor() {
+    const menu = document.getElementById("menu-container-conversor");
+    const overlay = document.getElementById("overlay-conversao");
+    const ativo = menu?.classList.toggle("active");
+    if (ativo) {
+        overlay?.classList.add("ativo");
+    }
+    else {
+        overlay?.classList.remove("ativo");
+    }
+}
+function fecharOpcoesConversor() {
+    const menu = document.getElementById("menu-container-conversor");
+    const overlay = document.getElementById("overlay-conversao");
+    overlay?.classList.remove("ativo");
+    menu?.classList.remove("active");
+}
+document.getElementById("overlay-conversao")?.addEventListener("click", fecharOpcoesConversor);
+select.addEventListener("change", () => {
+    moedaSelecionada.textContent = select.value;
+    converter();
+});
+// --- Conversor ---
+function converter() {
+    let valor = displayConversor.textContent;
+    const moeda = select.value;
+    if (/[+\-*/]/.test(valor)) {
+        valor = formatarSinais(valor);
+    }
+    else if (valor.includes("%")) {
+        valor = formatarDecimal(valor);
+    }
+    valor = eval(valor);
+    if (!Number.isInteger(valor)) {
+        valor = formatarDecimal(valor);
+    }
+    const valorF = parseFloat(valor);
+    const apiUrl = `https://v6.exchangerate-api.com/v6/2759982764cc197890048b48/latest/BRL`;
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+        const conversao = data.conversion_rates[moeda];
+        const valorConvertido = valorF * conversao;
+        resultado.textContent = `${formatarDecimal(valorConvertido.toFixed(2))}`;
+    })
+        .catch(() => {
+        resultado.textContent = "ERRO ao buscar a taxa de câmbio";
+    });
 }
