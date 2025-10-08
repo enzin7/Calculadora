@@ -1,0 +1,138 @@
+.containerHistorico {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: bottom center;
+  width: 100%;
+  max-width: 320px;
+  background-color: #444444;
+  border-radius: 15px;
+  opacity: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.4);
+
+  z-index: 10;
+}
+
+.containerHistorico.ativo {
+  transform: translateX(-50%) scaleY(1);
+  opacity: 1;
+  padding: 20px 20px 0 20px;
+}
+
+.containerHistorico ul {
+  max-height: 305px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.containerHistorico ul::-webkit-scrollbar {
+  width: 8px;
+}
+
+.containerHistorico ul::-webkit-scrollbar-track {
+  background: #333;
+  border-radius: 4px;
+}
+
+.containerHistorico ul::-webkit-scrollbar-thumb {
+  background-color: #ffa500;
+  border-radius: 4px;
+  border: 2px solid #333;
+}
+
+.containerHistorico ul::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+}
+
+.botoesHistorico {
+  width: 112.4%;
+  margin-left: -6.2%;
+  background-color: #333333;
+  padding: 9px 0;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  border-radius: 0 0 15px 15px;
+}
+
+.clearH {
+  position: relative;
+  right: 15px;
+  background-color: #333333;
+  border: none;
+  color: red;
+  cursor: pointer;
+}
+
+.closeH {
+  position: relative;
+  left: 15px;
+  background-color: #333333;
+  border: none;
+  color: #ffa500;
+  cursor: pointer;
+}
+
+.historico {
+  color: #fff;
+  font-size: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  min-height: 25px;
+  text-align: center;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+.tituloHistorico {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.tituloHistorico h3 {
+  margin: 0;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.tituloHistorico hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #888, transparent);
+  margin-top: 5px;
+}
+
+.ht {
+  border: none;
+  padding: 4px;
+  font-size: 20px;
+  cursor: pointer;
+  width: 50px;
+  border-radius: 0px 12px;
+  background-color: #333333;
+  position: relative;
+  left: 140px;
+  bottom: 9px;
+  z-index: 2;
+}
+
+.linha {
+  width: 700%;
+  height: 1px;
+  background-color: #333333;
+  position: relative;
+  top: 4px;
+  right: 283px;
+}

@@ -1,39 +1,48 @@
+// Importações
+import {
+  getEntrada,
+  setEntrada,
+  atualizarDisplay,
+  atualizarUltimaConta,
+  display,
+} from "./ui.js";
+import { atualizarHistorico, historico } from "./historico.js";
+import { converter } from "./conversor.js";
+
 // Variáveis Globais
-const sinais: string[] = ["+", "-", "x", "÷"];
-const numeros: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-const display: HTMLElement = document.getElementById("display");
-const displayHistorico: HTMLElement =
-  document.getElementById("displayHistorico");
-let entrada: string = "0";
-let historico: string[] = [];
-
-atualizarDisplay();
-limparHistorico();
-calcBasica();
-
+export const sinais: string[] = ["+", "-", "x", "÷"];
+export const numeros: string[] = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+];
 
 // --- Funções da Calculadora ---
-function atualizarDisplay(): void {
-  display.textContent = entrada;
-  entrada = display.textContent;
-  limparDeletar();
-  
-  display.scrollLeft = display.scrollWidth;
-}
+export function adicionarNumero(valor: string): void {
+  let entrada: string = getEntrada();
 
-function adicionarNumero(valor: string): void {
   if (entrada === "0") {
     entrada = "";
   } else if (entrada.endsWith("%") || entrada.endsWith(")")) {
     return;
   }
 
-  entrada += valor; 
+  entrada += valor;
+  setEntrada(entrada);
   atualizarDisplay();
   converter();
 }
 
-function adicionarOperador(operador: string): void {
+export function adicionarOperador(operador: string): void {
+  let entrada: string = getEntrada();
+
   const ultString: string = entrada.trim().slice(-1);
 
   if (ultString === operador) {
@@ -48,10 +57,13 @@ function adicionarOperador(operador: string): void {
     entrada += " " + operador + " ";
   }
 
+  setEntrada(entrada);
   atualizarDisplay();
 }
 
-function adicionarDecimal(ponto: string): void {
+export function adicionarDecimal(ponto: string): void {
+  let entrada: string = getEntrada();
+
   const sinal: number = entrada.search(/[+\-÷x](?!.*[+\-÷x])/);
   const contaAtual: string = entrada.slice(sinal + 1);
 
@@ -63,10 +75,14 @@ function adicionarDecimal(ponto: string): void {
     entrada += ponto;
   }
 
+  setEntrada(entrada);
   atualizarDisplay();
+  converter();
 }
 
-function adicionarPorcentagem(sPorcentagem: string): void {
+export function adicionarPorcentagem(sPorcentagem: string): void {
+  let entrada: string = getEntrada();
+
   const ultString: string = entrada.trim().slice(-1);
   const perc: number = entrada.lastIndexOf(")");
   const penulSinal: number = entrada.search(/.*[+\-x÷](?!.*[+\-x÷])/);
@@ -89,17 +105,22 @@ function adicionarPorcentagem(sPorcentagem: string): void {
     entrada += sPorcentagem;
   }
 
+  setEntrada(entrada);
   atualizarDisplay();
 }
 
-function limpar(): void {
+export function limpar(): void {
+  let entrada: string = getEntrada();
+
   entrada = "0";
+  setEntrada(entrada);
   atualizarDisplay();
   atualizarUltimaConta("");
-  converter();
 }
 
-function deletar(): void {
+export function deletar(): void {
+  let entrada: string = getEntrada();
+
   const final: boolean = sinais.includes(entrada.trim().slice(-1));
 
   if (entrada === "0" || entrada.trim().endsWith(")")) {
@@ -113,32 +134,33 @@ function deletar(): void {
     }
   }
 
+  setEntrada(entrada);
   atualizarDisplay();
-  converter();
 }
 
-function limparDeletar() {
-  const limparDeletar: HTMLElement = document.getElementById('limpar-deletar');
+export function limparDeletar() {
+  const btnLimparDeletar: HTMLElement =
+    document.getElementById("btn-limpar-deletar");
 
   let timeout: number;
 
-  limparDeletar.addEventListener("mousedown", () => {
+  btnLimparDeletar.addEventListener("mousedown", () => {
     timeout = window.setTimeout(() => {
       limpar();
     }, 800);
-  })
-
-  limparDeletar.addEventListener("mouseup", () => {
-    clearTimeout(timeout);
-  })
-
-  limparDeletar.addEventListener("mouseleave", () => {
-      clearTimeout(timeout);
   });
 
-  if (entrada.length < 2) {
-    limparDeletar.textContent = "AC";
-    limparDeletar.onclick = limpar;
+  btnLimparDeletar.addEventListener("mouseup", () => {
+    clearTimeout(timeout);
+  });
+
+  btnLimparDeletar.addEventListener("mouseleave", () => {
+    clearTimeout(timeout);
+  });
+
+  if (getEntrada().length < 2) {
+    btnLimparDeletar.textContent = "AC";
+    btnLimparDeletar.onclick = limpar;
   } else {
     const svg: string = `
       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24"
@@ -150,12 +172,14 @@ function limparDeletar() {
       </svg>
     `;
 
-    limparDeletar.innerHTML = svg;
-    limparDeletar.onclick = deletar;  
+    btnLimparDeletar.innerHTML = svg;
+    btnLimparDeletar.onclick = deletar;
   }
 }
 
-function inverterValor(): void {
+export function inverterValor(): void {
+  let entrada: string = getEntrada();
+
   const sinais: string[] = ["+", "x", "÷"];
   const sinal: number = entrada.search(/[+÷x](?!.*[+÷x])/);
   let pConta: string = entrada.slice(0, sinal + 1);
@@ -190,10 +214,14 @@ function inverterValor(): void {
     }
   }
 
+  setEntrada(entrada);
   atualizarDisplay();
+  converter();
 }
 
-function calcular(): void {
+export function calcular(): void {
+  let entrada: string = getEntrada();
+
   let resultado: string = formatarSinais(entrada);
 
   if (resultado.includes("%")) {
@@ -210,18 +238,17 @@ function calcular(): void {
   atualizarHistorico();
   atualizarUltimaConta(entrada);
 
-  entrada = resultado;
+  setEntrada(resultado);
   atualizarDisplay();
   converter();
 }
 
-
 // --- Funções de Formatação ---
-function formatarSinais(display: string): string {
+export function formatarSinais(display: string): string {
   return display.replace(/x/g, "*").replace(/÷/g, "/").replace(/,/g, ".");
 }
 
-function formatarPorcentagem(display: string): string {
+export function formatarPorcentagem(display: string): string {
   while (display.includes("%")) {
     const ultPorc: number = display.indexOf("%");
 
@@ -264,197 +291,8 @@ function formatarPorcentagem(display: string): string {
   return display;
 }
 
-function formatarDecimal(s: string): string {
+export function formatarDecimal(s: string): string {
   s = Number.parseFloat(s).toFixed(2).replace(".", ",");
 
   return s;
-}
-
-
-// --- Funções do Histórico ---
-function atualizarHistorico(): void {
-  const listaHistorico = document.getElementById("historico");
-  listaHistorico.innerHTML = "";
-
-  historico.forEach((el, index) => {
-    const hist: HTMLElement = document.createElement("li");
-
-    const antesDoIgual = el.split("=")[0].trim();
-    hist.textContent = el;
-
-    hist.onclick = () => {
-      antigaConta(antesDoIgual);
-      fecharHistorico();
-    };
-
-    listaHistorico.appendChild(hist);
-
-    if (index < historico.length - 1) {
-      const separador: HTMLElement = document.createElement("hr");
-      separador.style.border = "none";
-      separador.style.borderTop = "1px solid #888";
-      separador.style.margin = "5px 0";
-      listaHistorico.appendChild(separador);
-    }
-  });
-}
-
-function limparHistorico(): void {
-  historico = [];
-  const hist = document.createElement("li");
-
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("fill", "#ffffff");
-  svg.setAttribute("width", "24");
-  svg.setAttribute("height", "24");
-  svg.setAttribute("viewBox", "0 0 24 24");
-
-  const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path1.setAttribute(
-    "d",
-    "M12.5 7.25a.75.75 0 00-1.5 0v5.5c0 .27.144.518.378.651l3.5 2a.75.75 0 00.744-1.302L12.5 12.315V7.25z"
-  );
-
-  const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path2.setAttribute("fill-rule", "evenodd");
-  path2.setAttribute(
-    "d",
-    "M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM2.5 12a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z"
-  );
-
-  svg.appendChild(path1);
-  svg.appendChild(path2);
-
-  hist.appendChild(svg);
-  const br = document.createElement("br");
-  hist.appendChild(br);
-  hist.append(" Sem Histórico");
-
-  const listaHistorico = document.getElementById("historico");
-  listaHistorico.innerHTML = "";
-  listaHistorico.appendChild(hist);
-}
-
-function mostrarHistorico(): void {
-  const containerHistorico: HTMLElement = document.getElementById("containerHistorico");
-  const overlay = document.getElementById("overlay");
-
-  containerHistorico?.classList.add("ativo");
-  overlay?.classList.add("ativo");
-}
-
-function fecharHistorico(): void {
-  const containerHistorico: HTMLElement = document.getElementById("containerHistorico");
-  const overlay: HTMLElement = document.getElementById("overlay");
-
-  containerHistorico?.classList.remove("ativo");
-  overlay?.classList.remove("ativo");
-}
-document.getElementById("overlay")?.addEventListener("click", fecharHistorico);
-
-function atualizarUltimaConta(ultimaConta: string): void {
-  displayHistorico.textContent = ultimaConta;
-
-  displayHistorico.scrollLeft;
-}
-
-function antigaConta(antigaConta: string): void {
-  entrada = antigaConta;
-
-  atualizarDisplay();
-  atualizarUltimaConta("");
-}
-
-
-// --- Menu Tipo da Calculadora ---
-function mostrarOpcoes() {
-  const menu: HTMLElement = document.getElementById("menu-container");
-  const overlay: HTMLElement = document.getElementById("overlay");
-
-  const ativo = menu?.classList.toggle("active");
-
-  if (ativo) {
-    overlay?.classList.add("ativo");
-  } else {
-    overlay?.classList.remove("ativo");
-  }
-}
-
-function fecharOpcoes() {
-  const menu: HTMLElement = document.getElementById("menu-container");
-  const overlay: HTMLElement = document.getElementById("overlay");
-
-  overlay?.classList.remove("ativo");
-  menu?.classList.remove("active");
-}
-document.getElementById("overlay")?.addEventListener("click", fecharOpcoes);
-
-
-function calcBasica() {
-  document.getElementById("calculadora-conversao")!.style.display = "none";
-
-  document.getElementById("conversao")!.style.color = "white";
-  document.getElementById("conversao")!.style.fontWeight = "100";
-
-  document.getElementById("basica")!.style.color = "#ffa500";
-  document.getElementById("basica")!.style.fontWeight = "bold";
-
-  fecharOpcoes();
-}
-
-function calcConversao() {
-  document.getElementById("calculadora-conversao")!.style.display = "block";
-
-  document.getElementById("basica")!.style.color = "white";
-  document.getElementById("basica")!.style.fontWeight = "100";
-
-  document.getElementById("conversao")!.style.color = "#ffa500";
-  document.getElementById("conversao")!.style.fontWeight = "bold";
-
-  fecharOpcoes();
-}
-document.getElementById("basica")?.addEventListener("click", calcBasica);
-document.getElementById("conversao")?.addEventListener("click", calcConversao);
-
-
-//--- Calculadora de Conversão ---
-const select: HTMLSelectElement = document.getElementById("moeda") as HTMLSelectElement;
-const moedaSelecionada: HTMLElement = document.getElementById("moedaSelecionada") as HTMLElement;
-const resultado: HTMLElement = document.getElementById("valor-convertido") as HTMLElement;
-
-resultado.textContent = "0,00";
-
-select.addEventListener("change", () => {
-  moedaSelecionada.textContent = select.value;
-  converter();
-});
-
-// --- Conversor --- 
-function converter(): void {
-  let valor: string = display.textContent;
-  const moeda: string = select.value;
-
-  if (sinais.includes(valor) || valor.includes("%")) {
-    valor = formatarPorcentagem(formatarSinais(valor));
-  }
-
-  valor = eval(valor);
-
-  if (!Number.isInteger(valor)) {
-    valor = formatarDecimal(valor);
-  }
-
-  const apiUrl = `https://v6.exchangerate-api.com/v6/2759982764cc197890048b48/latest/BRL`;
-
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      const conversao: number = data.conversion_rates[moeda];
-      let valorConvertido: number = parseFloat(valor) * conversao;
-
-      resultado.textContent = `${formatarDecimal(valorConvertido.toFixed(2))}`;
-    })
-    .catch(() => {
-      resultado.textContent = "ERRO ao buscar a taxa de câmbio";
-    });
 }

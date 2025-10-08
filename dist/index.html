@@ -9,9 +9,9 @@
 <body>
     <div class="calculadora">
 
-        <div class="display-wrapper" id="calculadora-basica">'
+        <div class="display-wrapper" id="calculadora-basica">
             
-            <button class="ht" onclick="mostrarHistorico()">
+            <button class="ht" id="btn-mostrar-historico">
                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                     width="18" height="18" viewBox="0 0 512.000000 448.000000"
                     preserveAspectRatio="xMidYMid meet">
@@ -39,13 +39,13 @@
             </button>
 
 
-            <div class="display-historico" id="displayHistorico" onclick="antigaConta(this.textContent)"></div>
+             <div class="display-historico" id="displayHistorico"></div>
             
             <div class="display">
                 <div class="display-inner" id="display"></div>
             </div>
 
-            <div class="displayConversor" id="calculadora-conversao" style="display: none;">
+            <div id="calculadora-conversao">
                 <div class="linha-conversor"></div>
                 <div class="display-convertido" id="displayConvertido">
                     <div class="container-moeda">
@@ -229,36 +229,36 @@
                 <h3>HISTÓRICO</h3>
                 <hr />
             </div>
-            <ul id="historico" class="historico" onclick="">
+            <ul class="historico" id="historico">
             </ul>
             <div class="botoesHistorico">
-                <button class="closeH" onclick="fecharHistorico()">Fechar</button>
-                <button class="clearH" onclick="limparHistorico()">Limpar</button>
+                <button class="closeH" id="btn-fechar-historico">Fechar</button>
+                <button class="clearH" id="btn-limpar-historico">Limpar</button>
             </div>
         </div>
         
         <div style="margin-top: -30px;" class="buttons">
-            <button class="button light-gray" id="limpar-deletar">AC</button>
-            <button class="button light-gray" onclick="inverterValor()">+/-</button>
-            <button class="button light-gray" onclick="adicionarPorcentagem('%')">%</button>
-            <button class="button yellow" onclick="adicionarOperador('÷')">÷</button>
+            <button class="button light-gray" id="btn-limpar-deletar">AC</button>
+            <button class="button light-gray" id="btn-inverter">+/-</button>
+            <button class="button light-gray" id="btn-porcentagem">%</button>
+            <button class="button yellow" id="btn-dividir">÷</button>
 
-            <button class="button dark-gray" onclick="adicionarNumero('7')">7</button>
-            <button class="button dark-gray" onclick="adicionarNumero('8')">8</button>
-            <button class="button dark-gray" onclick="adicionarNumero('9')">9</button>
-            <button class="button yellow" onclick="adicionarOperador('x')">x</button>
+            <button class="button dark-gray" id="btn-7">7</button>
+            <button class="button dark-gray" id="btn-8">8</button>
+            <button class="button dark-gray" id="btn-9">9</button>
+            <button class="button yellow" id="btn-multiplicar">x</button>
 
-            <button class="button dark-gray" onclick="adicionarNumero('4')">4</button>
-            <button class="button dark-gray" onclick="adicionarNumero('5')">5</button>
-            <button class="button dark-gray" onclick="adicionarNumero('6')">6</button>
-            <button class="button yellow" onclick="adicionarOperador('-')">-</button>
+            <button class="button dark-gray" id="btn-4">4</button>
+            <button class="button dark-gray" id="btn-5">5</button>
+            <button class="button dark-gray" id="btn-6">6</button>
+            <button class="button yellow" id="btn-subtrair">-</button>
 
-            <button class="button dark-gray" onclick="adicionarNumero('1')">1</button>
-            <button class="button dark-gray" onclick="adicionarNumero('2')">2</button>
-            <button class="button dark-gray" onclick="adicionarNumero('3')">3</button>
-            <button class="button yellow" onclick="adicionarOperador('+')">+</button>
+            <button class="button dark-gray" id="btn-1">1</button>
+            <button class="button dark-gray" id="btn-2">2</button>
+            <button class="button dark-gray" id="btn-3">3</button>
+            <button class="button yellow" id="btn-somar">+</button>
 
-            <button class="button light-gray" onclick="mostrarOpcoes()">
+            <button class="button light-gray" id="btn-menu">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 23" width="33" height="28">
                     <rect x="5" y="3" width="14" height="20" rx="2" ry="2" fill="#FFFFFF"/>
                     <rect x="6.5" y="5" width="10.9" height="4" rx="0.5" ry="0.5" fill="#555555"/>
@@ -273,13 +273,13 @@
                     <circle cx="16" cy="20" r="1.2" fill="#555555"/>
                 </svg>
             </button>
-            <button class="button dark-gray" onclick="adicionarNumero('0')">0</button>
-            <button class="button dark-gray" onclick="adicionarDecimal(',')">,</button>
-            <button class="button yellow" onclick="calcular()">=</button>
+            <button class="button dark-gray" id="btn-0">0</button>
+            <button class="button dark-gray" id="btn-decimal">,</button>
+            <button class="button yellow" id="btn-calcular">=</button>
         </div>
 
-        <div id="menu-container" class="popover-menu hidden">
-            <button class="menu-item" id="basica">                
+        <div class="popover-menu hidden" id="menu-container">
+            <button class="menu-item menu-ativo" id="basica">                
                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                 width="20pt" height="20pt" viewBox="0 0 250 600"
                 preserveAspectRatio="xMidYMid meet">
@@ -351,10 +351,10 @@
                 <p style="margin-left: -25px;">Conversão</p>
             </button>
         </div>
-        <div id="overlay" class="overlay"></div>
+        <div class="overlay" id="overlay" ></div>
     </div>
 
-    <script src="/Calculadora/dist/js/calculadora.js"></script>
+    <script type="module" src="/Calculadora/dist/js/app.js"></script>
 
 </body>
 

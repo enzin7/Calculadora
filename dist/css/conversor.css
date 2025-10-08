@@ -1,0 +1,105 @@
+#calculadora-conversao {
+  margin-top: -60px;
+  margin-bottom: 50px;
+}
+
+.display-convertido {
+  background-color: black;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  overflow: hidden; /* impede o conteúdo de vazar antes da animação */
+  padding: 0 25px; /* começa sem padding */
+  font-size: 30px;
+  white-space: nowrap;
+  text-align: right;
+  border-radius: 0 0 15px 15px;
+
+  /* estado inicial escondido */
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.5s ease;
+}
+
+/* quando ativar */
+.display-convertido.ativo {
+  padding: 20px 25px;
+  max-height: 200px; /* valor suficiente pro conteúdo */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.linha-conversor {
+  width: 90%;
+  height: 0.5px;
+  background-color: #333;
+  position: relative;
+  top: 10px;
+  left: 15px;
+  z-index: 2;
+}
+
+.container-moeda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 90%;
+}
+
+.select-moeda {
+  width: 0;
+  padding: 4px 10px;
+  white-space: nowrap;
+  color: black;
+  border: none;
+  background: none;
+  position: relative;
+  right: 265px;
+  bottom: 19px;
+  cursor: pointer;
+
+  appearance: none; /* remove estilo padrão do navegador */
+  -webkit-appearance: none; /* Safari/Chrome */
+  -moz-appearance: none; /* Firefox */
+}
+
+.select-moeda {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="orange" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+
+.moeda-selecionada {
+  color: #333333;
+  flex-shrink: 0;
+  margin-top: 9px;
+  margin-right: -35px;
+}
+
+.valor-convertido {
+  font-size: 30px;
+  white-space: nowrap;
+  margin-bottom: -5px;
+  flex-shrink: 1; /* pode encolher se precisar */
+  min-width: 0; /* permite encolher corretamente */
+  text-overflow: clip; /* evita quebrar */
+}
+
+.valor-wrapper {
+  flex: 1; /* ocupa o espaço que sobrar */
+  overflow-x: auto; /* só o valor tem rolagem */
+  white-space: nowrap;
+  text-align: right;
+}
+
+.valor-wrapper::-webkit-scrollbar {
+  height: 3px;
+}
+
+.valor-wrapper::-webkit-scrollbar-thumb {
+  background-color: #ffa500;
+  border-radius: 15px;
+  cursor: pointer;
+}

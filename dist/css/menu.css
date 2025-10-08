@@ -1,0 +1,51 @@
+.popover-menu {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(44, 44, 44, 1);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  min-width: 156px;
+  transform: translateY(20px) scale(0.8);
+  transform-origin: bottom left;
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease-out;
+  pointer-events: none;
+}
+
+.popover-menu.active {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-item {
+  background: none;
+  border: none;
+  color: #ffffff;
+  text-align: left;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+
+  display: flex; /* coloca ícone e texto lado a lado */
+  align-items: center; /* centraliza verticalmente */
+  gap: 10px; /* espaço entre o ícone e o texto */
+}
+
+.menu-item.menu-ativo {
+  color: #ffa500;
+  font-weight: bold;
+}
+
+.menu-item:hover {
+  background-color: #444444;
+  color: #ffa500;
+}
