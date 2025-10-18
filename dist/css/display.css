@@ -36,6 +36,10 @@
   cursor: pointer;
 }
 
+.display-inner.e {
+  right: 52px;
+}
+
 .display-historico {
   font-size: 15px;
   color: #aaa;

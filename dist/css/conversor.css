@@ -1,5 +1,5 @@
 #calculadora-conversao {
-  margin-top: -60px;
+  margin-top: -81px;
   margin-bottom: 50px;
 }
 
@@ -71,11 +71,30 @@
   background-size: 12px;
 }
 
+.select-moeda.escolhida {
+  z-index: 2000;
+  bottom: 18px;
+  right: 140.85px;
+}
+
+.select-moeda.escolhida.hidden,
+.moeda-selecionada.e.hidden {
+  pointer-events: none;
+  opacity: 0;
+}
+
 .moeda-selecionada {
   color: #333333;
   flex-shrink: 0;
   margin-top: 9px;
   margin-right: -35px;
+}
+
+.moeda-selecionada.e {
+  z-index: 1;
+  position: relative;
+  left: 116px;
+  top: 20px;
 }
 
 .valor-convertido {

@@ -97,6 +97,7 @@ export function limpar() {
     entrada = "0";
     setEntrada(entrada);
     atualizarDisplay();
+    converter();
     atualizarUltimaConta("");
 }
 export function deletar() {
@@ -116,6 +117,7 @@ export function deletar() {
     }
     setEntrada(entrada);
     atualizarDisplay();
+    converter();
 }
 export function limparDeletar() {
     const btnLimparDeletar = document.getElementById("btn-limpar-deletar");

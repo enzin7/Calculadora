@@ -115,6 +115,7 @@ export function limpar(): void {
   entrada = "0";
   setEntrada(entrada);
   atualizarDisplay();
+  converter();
   atualizarUltimaConta("");
 }
 
@@ -136,6 +137,7 @@ export function deletar(): void {
 
   setEntrada(entrada);
   atualizarDisplay();
+  converter();
 }
 
 export function limparDeletar() {

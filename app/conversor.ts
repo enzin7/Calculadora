@@ -6,19 +6,22 @@ import {
   formatarPorcentagem,
   formatarSinais,
 } from "./calculadora.js";
+import { moedaEscolhida, moedaS } from "./menu.js";
 
 // Variáveis Globais
 const select: HTMLSelectElement = document.getElementById(
   "moeda"
 ) as HTMLSelectElement;
-const moedaSelecionada: HTMLElement = document.getElementById(
-  "moedaSelecionada"
-) as HTMLElement;
-const resultado: HTMLElement = document.getElementById(
-  "valor-convertido"
-) as HTMLElement;
+const moedaSelecionada: HTMLElement =
+  document.getElementById("moedaSelecionada");
+const resultado: HTMLElement = document.getElementById("valor-convertido");
 
 resultado.textContent = "0,00";
+
+moedaEscolhida.addEventListener("change", () => {
+  moedaS.textContent = moedaEscolhida.value;
+  converter();
+});
 
 select.addEventListener("change", () => {
   moedaSelecionada.textContent = select.value;
@@ -28,6 +31,7 @@ select.addEventListener("change", () => {
 export function converter(): void {
   let valor: string = getEntrada();
   const moeda: string = select.value;
+  const moedaE: string = moedaEscolhida.value;
 
   if (sinais.includes(valor) || valor.includes("%")) {
     valor = formatarPorcentagem(formatarSinais(valor));
@@ -35,7 +39,7 @@ export function converter(): void {
 
   valor = eval(valor);
 
-  const apiUrl = `https://v6.exchangerate-api.com/v6/2759982764cc197890048b48/latest/BRL`;
+  const apiUrl = `https://v6.exchangerate-api.com/v6/2759982764cc197890048b48/latest/${moedaE}`;
 
   fetch(apiUrl)
     .then((response) => response.json())

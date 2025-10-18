@@ -1,8 +1,13 @@
+//--- Variaveis Globais ---
+const conversao = document.querySelector(".display-convertido");
+export const moedaEscolhida: HTMLSelectElement = document.getElementById("moeda-escolhida") as HTMLSelectElement;
+const menu: HTMLElement = document.getElementById("menu-container");
+const overlay: HTMLElement = document.getElementById("overlay");
+const displayI: HTMLElement = document.getElementById("display");
+export const moedaS: HTMLElement = document.getElementById("moeda-e");
+
 // --- Menu Tipo da Calculadora ---
 export function mostrarOpcoes() {
-  const menu: HTMLElement = document.getElementById("menu-container");
-  const overlay: HTMLElement = document.getElementById("overlay");
-
   const ativo = menu?.classList.toggle("active");
 
   if (ativo) {
@@ -13,16 +18,13 @@ export function mostrarOpcoes() {
 }
 
 export function fecharOpcoes() {
-  const menu: HTMLElement = document.getElementById("menu-container");
-  const overlay: HTMLElement = document.getElementById("overlay");
-
   overlay?.classList.remove("ativo");
   menu?.classList.remove("active");
 }
 document.getElementById("overlay")?.addEventListener("click", fecharOpcoes);
 
 export function calcBasica() {
-  const conversao = document.querySelector(".display-convertido");
+  moedaEscolhida.classList.add("hidden");
 
   conversao?.classList.remove("ativo");
   document.getElementById("conversao")!.style.color = "white";
@@ -31,11 +33,14 @@ export function calcBasica() {
   document.getElementById("basica")!.style.color = "#ffa500";
   document.getElementById("basica")!.style.fontWeight = "bold";
 
+  displayI.classList.remove("e");
+  moedaS.classList.add("hidden");
+
   fecharOpcoes();
 }
 
 export function calcConversao() {
-  const conversao = document.querySelector(".display-convertido");
+  moedaEscolhida.classList.remove("hidden");
 
   conversao?.classList.add("ativo");
   document.getElementById("basica")!.style.color = "white";
@@ -43,6 +48,9 @@ export function calcConversao() {
 
   document.getElementById("conversao")!.style.color = "#ffa500";
   document.getElementById("conversao")!.style.fontWeight = "bold";
+
+  displayI.classList.add("e");
+  moedaS.classList.remove("hidden");
 
   fecharOpcoes();
 }
