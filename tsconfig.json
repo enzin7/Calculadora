@@ -3,7 +3,7 @@
         "outDir": "dist/js",
         "target": "esnext",
         "noEmitOnError": true,
-        "noImplicitAny": true,
+        "noImplicitAny": true
     },
     "include": ["app/**/*"]
 }
